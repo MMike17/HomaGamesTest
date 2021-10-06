@@ -16,11 +16,28 @@ public class VFXManager : BaseBehaviour
 	public PostProcessVolume volume;
 
 	PostProcessProfile profile;
+	ChromaticAberration aberration;
+	LensDistortion distortion;
+	Bloom bloom;
 	float timer;
 
 	public void Init()
 	{
 		profile = volume.profile;
+
+		bool hasError = false;
+
+		if(!profile.TryGetSettings<ChromaticAberration>(out aberration))
+			hasError = true;
+
+		if(!profile.TryGetSettings<LensDistortion>(out distortion))
+			hasError = true;
+
+		if(!profile.TryGetSettings<Bloom>(out bloom))
+			hasError = true;
+
+		if(hasError)
+			Debug.LogError("Couldn't get Post Processing setting");
 
 		InitInternal();
 	}
@@ -47,8 +64,17 @@ public class VFXManager : BaseBehaviour
 		while (timer <= settings.duration)
 		{
 			timer += Time.deltaTime;
+
+			aberration.intensity.value = settings.GetChromaticAberation(timer);
+			distortion.intensity.value = settings.GetDistortion(timer);
+			bloom.intensity.value = settings.GetBloom(timer);
+
 			yield return null;
 		}
+
+		aberration.intensity.value = settings.GetChromaticAberation(settings.duration);
+		distortion.intensity.value = settings.GetDistortion(settings.duration);
+		bloom.intensity.value = settings.GetBloom(settings.duration);
 	}
 
 	[Serializable]
@@ -64,5 +90,20 @@ public class VFXManager : BaseBehaviour
 		[Space]
 		public float bloomAmount;
 		public AnimationCurve bloomCurve;
+
+		public float GetChromaticAberation(float timer)
+		{
+			return chromaticAberrationCurve.Evaluate(timer / duration) * chromaticAberrationAmount;
+		}
+
+		public float GetDistortion(float timer)
+		{
+			return distortionCurve.Evaluate(timer / duration) * distortionAmount;
+		}
+
+		public float GetBloom(float timer)
+		{
+			return bloomCurve.Evaluate(timer / duration) * bloomAmount;
+		}
 	}
 }
