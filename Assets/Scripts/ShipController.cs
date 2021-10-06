@@ -92,21 +92,33 @@ public class ShipController : BaseBehaviour
 
 	public void StartShip()
 	{
+		if(!CheckInitialized())
+			return;
+
 		gamePaused = false;
 	}
 
 	public void FreezeShip()
 	{
+		if(!CheckInitialized())
+			return;
+
 		gamePaused = true;
 	}
 
 	public void Restart()
 	{
+		if(!CheckInitialized())
+			return;
+
 		anim.Play("Idle");
 	}
 
 	public void GetBonus()
 	{
+		if(!CheckInitialized())
+			return;
+
 		anim.Play("Bonus");
 	}
 }
