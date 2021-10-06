@@ -6,8 +6,6 @@ using UnityEngine.Rendering.PostProcessing;
 /// <summary>Manages the visual effects (post processing)</summary>
 public class VFXManager : BaseBehaviour
 {
-	// TODO : Set effects in editor
-
 	[Header("Settings")]
 	public PostProcessAnimSettings bonusSettings;
 	public PostProcessAnimSettings newHighSettings, passedObstacleSettings;
