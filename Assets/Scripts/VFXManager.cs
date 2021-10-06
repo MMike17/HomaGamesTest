@@ -44,16 +44,25 @@ public class VFXManager : BaseBehaviour
 
 	public void BonusAnim()
 	{
+		if(!CheckInitialized())
+			return;
+
 		StartCoroutine(StartAnimation(bonusSettings));
 	}
 
 	public void NewHighAnim()
 	{
+		if(!CheckInitialized())
+			return;
+
 		StartCoroutine(StartAnimation(newHighSettings));
 	}
 
 	public void PassedObstacleAnim()
 	{
+		if(!CheckInitialized())
+			return;
+
 		StartCoroutine(StartAnimation(passedObstacleSettings));
 	}
 
