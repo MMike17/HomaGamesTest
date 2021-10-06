@@ -61,5 +61,8 @@ public class VFXManager : BaseBehaviour
 		[Space]
 		public float distortionAmount;
 		public AnimationCurve distortionCurve;
+		[Space]
+		public float bloomAmount;
+		public AnimationCurve bloomCurve;
 	}
 }
