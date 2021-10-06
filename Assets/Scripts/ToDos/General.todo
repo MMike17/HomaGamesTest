@@ -1,0 +1,9 @@
+x Remove unused Unity packages
+x Add necessary Unity packages
+x Setup general GameManager
+- Setup Git project
+- Gameplay
+- Levels
+- Score save
+- Main menu
+- End screen
