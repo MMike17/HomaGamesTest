@@ -37,8 +37,17 @@ public class GameManager : MonoBehaviour
 	void InitializeManagers()
 	{
 		vfxManager.Init();
-		levelManager.Init();
-		
+		levelManager.Init(
+			(min, max) =>
+			{
+				// TODO : Set min max to obstacle spawner
+			},
+			(bonusPercent) =>
+			{
+				// TODO : Set bonus spawn percent to obstacle spawner
+			}
+		);
+
 		// TODO : Initialize managers
 	}
 
