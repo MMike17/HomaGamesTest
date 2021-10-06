@@ -104,4 +104,9 @@ public class ShipController : BaseBehaviour
 	{
 		anim.Play("Idle");
 	}
+
+	public void GetBonus()
+	{
+		anim.Play("Bonus");
+	}
 }

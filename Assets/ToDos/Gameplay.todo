@@ -1,7 +1,9 @@
 x Setup game scene
 x Ship movement
-- Collision with obstacles
-- Bonuses effect on ship
-- Bonuses vfx
-- Bonuses sfx
+x Collision with obstacles
+x Bonuses effect on ship
+x Bonuses vfx
+x Crash vfx
+x New high vfx
 - Difficulty increase
+- Bonuses sfx
