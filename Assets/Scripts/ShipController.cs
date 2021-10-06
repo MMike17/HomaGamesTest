@@ -1,13 +1,20 @@
+using System;
 using UnityEngine;
 
 /// <summary>Class moving the ship depending on player inputs</summary>
+[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class ShipController : BaseBehaviour
 {
+	const float CRASH_ANIM_DURATION = 1.5f;
+
 	[Header("Speed")]
 	public float forwardSpeed;
 	public float minX, maxX, lateralSpeed;
 	public AnimationCurve smoothingCurve;
 
+	Collider shipCollider;
+	Animator anim;
+	Action ShowEndScreen;
 	float horizontalInput, halfRange;
 	bool gamePaused;
 
@@ -18,11 +25,15 @@ public class ShipController : BaseBehaviour
 		Debug.DrawLine(Vector3.up * 1.5f + Vector3.right * maxX - Vector3.forward * 2, Vector3.up * 1.5f + Vector3.right * maxX + Vector3.forward * 10, Color.red);
 	}
 
-	public void Init()
+	public void Init(Action showEndScreen)
 	{
+		ShowEndScreen = showEndScreen;
+
 		gamePaused = true;
 		horizontalInput = 0;
 
+		anim = GetComponent<Animator>();
+		shipCollider = GetComponentInChildren<Collider>();
 		halfRange = Mathf.Abs(minX - maxX) / 2;
 
 		InitInternal();
@@ -66,6 +77,19 @@ public class ShipController : BaseBehaviour
 		transform.position = Vector3.MoveTowards(transform.position, targetPos, smoothedSpeed * Time.deltaTime);
 	}
 
+	void OnCollisionEnter(Collision collision)
+	{
+		if(collision.collider.CompareTag("Obstacle"))
+		{
+			shipCollider.enabled = false;
+			anim.Play("Crash");
+
+			DelayedActionsManager.SceduleAction(ShowEndScreen, CRASH_ANIM_DURATION);
+		}
+		else
+			Debug.LogError(debugTag + "This shouldn't happen");
+	}
+
 	public void StartShip()
 	{
 		gamePaused = false;
@@ -74,5 +98,10 @@ public class ShipController : BaseBehaviour
 	public void FreezeShip()
 	{
 		gamePaused = true;
+	}
+
+	public void Restart()
+	{
+		anim.Play("Idle");
 	}
 }

@@ -21,13 +21,15 @@ public class GameManager : MonoBehaviour
 		Debug.Log("Initialization done !");
 	}
 
-	// TEST
 	void Update()
 	{
+		DelayedActionsManager.Update(Time.deltaTime);
+
+		// TEST
 		if(Input.GetKeyDown(KeyCode.Backspace))
 			shipController.StartShip();
+		// TEST
 	}
-	// TEST
 
 	void InitializeManagers()
 	{
@@ -36,6 +38,6 @@ public class GameManager : MonoBehaviour
 
 	void InitializeOthers()
 	{
-		shipController.Init();
+		shipController.Init(() => Debug.Log("Pop end screen"));
 	}
 }
