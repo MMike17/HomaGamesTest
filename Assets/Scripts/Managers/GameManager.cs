@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour
 	[Header("Settings")]
 	public LogLevel dataManagerLogLevel;
 
-	// [Header("Managers")]
+	[Header("Managers")]
+	public VFXManager vfxManager;
+	public LevelManager levelManager;
+
 	[Header("Scene references")]
 	public ShipController shipController;
 
@@ -33,6 +36,9 @@ public class GameManager : MonoBehaviour
 
 	void InitializeManagers()
 	{
+		vfxManager.Init();
+		levelManager.Init();
+		
 		// TODO : Initialize managers
 	}
 
