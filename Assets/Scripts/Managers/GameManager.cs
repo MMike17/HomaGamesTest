@@ -86,11 +86,14 @@ public class GameManager : MonoBehaviour
 			},
 			playerScore.highscore
 		);
-		endScreenManager.Init(() =>
-		{
-			trackGenerationManager.StartGame();
-			shipController.StartShip();
-		});
+		endScreenManager.Init(
+			maxScoreHistory,
+			() =>
+			{
+				trackGenerationManager.StartGame();
+				shipController.StartShip();
+			}
+		);
 	}
 
 	void InitializeOthers()
@@ -99,10 +102,12 @@ public class GameManager : MonoBehaviour
 		{
 			trackGenerationManager.PauseGame();
 
+			float lastHighScore = playerScore.highscore;
+
 			playerScore.AddScore(scoreManager.GetCurrentScore(), maxScoreHistory);
 			DataManager.SaveObject(playerScore, SAVE_FILE_NAME);
 
-			endScreenManager.DisplayData(playerScore.scoresHistory, playerScore.highscore);
+			endScreenManager.DisplayData(playerScore.scoresHistory, lastHighScore);
 		});
 	}
 }

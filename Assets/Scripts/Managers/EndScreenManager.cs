@@ -12,24 +12,28 @@ public class EndScreenManager : BaseBehaviour
 	public GameObject sharePanel;
 	public Button shareButton, replayButton;
 	[Space]
+	public ScoresGraph scoresGraph;
+	[Space]
 	public Button closeShareButton;
 
-	public void Init(Action RestartGame)
+	public void Init(int maxScoresLength, Action RestartGame)
 	{
 		shareButton.onClick.AddListener(() => sharePanel.SetActive(true));
 		replayButton.onClick.AddListener(() => RestartGame());
+
+		scoresGraph.Init(maxScoresLength);
 
 		closeShareButton.onClick.AddListener(() => sharePanel.SetActive(false));
 
 		InitInternal();
 	}
 
-	public void DisplayData(List<float> scores, float highscore)
+	public void DisplayData(List<float> scores, float lastHighScore)
 	{
-		// TODO : display informations
-
 		sharePanel.SetActive(false);
 
 		scoreDisplay.text = scores[scores.Count - 1].ToString();
+
+		scoresGraph.DisplayData(scores, lastHighScore);
 	}
 }
