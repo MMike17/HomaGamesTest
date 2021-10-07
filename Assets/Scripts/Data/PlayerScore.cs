@@ -6,13 +6,15 @@ using System.Collections.Generic;
 public class PlayerScore
 {
 	public List<float> scoresHistory { get; private set; }
+	public float highscore;
 
 	public PlayerScore()
 	{
 		scoresHistory = new List<float>();
+		highscore = 0;
 	}
 
-	public void TrimHistory(int limitSize)
+	void TrimHistory(int limitSize)
 	{
 		if(scoresHistory.Count > limitSize)
 			return;
@@ -22,5 +24,15 @@ public class PlayerScore
 		// limit history size
 		for (int i = 0; i < loops; i++)
 			scoresHistory.RemoveAt(0);
+	}
+
+	public void AddScore(float score, int limitSize)
+	{
+		scoresHistory.Add(score);
+
+		if(score > highscore)
+			highscore = score;
+
+		TrimHistory(limitSize);
 	}
 }

@@ -24,6 +24,7 @@ public class TrackGenerationManager : BaseBehaviour
 	Action<float> GenerateBonus;
 	Action GiveScore;
 	float currentDifficulty, currentSize, sizeCount, shipControllerZPos;
+	bool gamePaused;
 
 	public void Init(float shipControllerZPos, Action giveScore, Action<float> generateBonus, Func<float> getBonusPercentile)
 	{
@@ -36,12 +37,14 @@ public class TrackGenerationManager : BaseBehaviour
 		spawnedObstacle = new List<Obstacle>();
 		lastObstacles = new List<int>();
 
+		gamePaused = true;
+
 		InitInternal();
 	}
 
 	void Update()
 	{
-		if(!initialized)
+		if(!initialized || gamePaused)
 			return;
 
 		// detect when we need to spawn obstacles
@@ -137,6 +140,22 @@ public class TrackGenerationManager : BaseBehaviour
 			return;
 
 		currentDifficulty = difficulty;
+	}
+
+	public void StartGame()
+	{
+		if(!CheckInitialized())
+			return;
+
+		gamePaused = false;
+	}
+
+	public void PauseGame()
+	{
+		if(!CheckInitialized())
+			return;
+
+		gamePaused = true;
 	}
 
 	public class Obstacle

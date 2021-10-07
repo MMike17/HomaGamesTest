@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 	public TrackGenerationManager trackGenerationManager;
 	public BonusManager bonusManager;
 	public ScoreManager scoreManager;
+	public MainMenuManager mainMenuManager;
 
 	[Header("Scene references")]
 	public ShipController shipController;
@@ -80,6 +81,15 @@ public class GameManager : MonoBehaviour
 				shipController.UnlockInput();
 			}
 		);
+		scoreManager.Init();
+		mainMenuManager.Init(
+			() =>
+			{
+				shipController.StartShip();
+				trackGenerationManager.StartGame();
+			},
+			playerScore.highscore
+		);
 
 		// TODO : Initialize managers
 	}
@@ -88,9 +98,7 @@ public class GameManager : MonoBehaviour
 	{
 		shipController.Init(() =>
 		{
-			playerScore.scoresHistory.Add(scoreManager.GetCurrentScore());
-			playerScore.TrimHistory(maxScoreHistory);
-
+			playerScore.AddScore(scoreManager.GetCurrentScore(), maxScoreHistory);
 			DataManager.SaveObject(playerScore, SAVE_FILE_NAME);
 
 			// TODO : Link end screen to player and give all score history
