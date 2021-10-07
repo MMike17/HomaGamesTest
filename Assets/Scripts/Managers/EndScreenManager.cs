@@ -9,7 +9,7 @@ public class EndScreenManager : BaseBehaviour
 {
 	[Header("Scene references")]
 	public TextMeshProUGUI scoreDisplay;
-	public GameObject sharePanel;
+	public GameObject canvas, sharePanel;
 	public Button shareButton, replayButton;
 	[Space]
 	public ScoresGraph scoresGraph;
@@ -25,11 +25,14 @@ public class EndScreenManager : BaseBehaviour
 
 		closeShareButton.onClick.AddListener(() => sharePanel.SetActive(false));
 
+		canvas.SetActive(false);
+
 		InitInternal();
 	}
 
 	public void DisplayData(List<float> scores, float lastHighScore)
 	{
+		canvas.SetActive(true);
 		sharePanel.SetActive(false);
 
 		scoreDisplay.text = scores[scores.Count - 1].ToString();
