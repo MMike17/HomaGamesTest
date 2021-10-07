@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 	[Header("Managers")]
 	public VFXManager vfxManager;
 	public LevelManager levelManager;
+	public TrackGenerationManager trackGenerationManager;
 
 	[Header("Scene references")]
 	public ShipController shipController;
@@ -41,11 +42,11 @@ public class GameManager : MonoBehaviour
 			(min, max) =>
 			{
 				// TODO : Set min max to obstacle spawner
-			},
-			(bonusPercent) =>
-			{
-				// TODO : Set bonus spawn percent to obstacle spawner
 			}
+		);
+		trackGenerationManager.Init(
+			() => Debug.Log("generate bonus"),
+			() => { return levelManager.GetBonusPercent(); }
 		);
 
 		// TODO : Initialize managers

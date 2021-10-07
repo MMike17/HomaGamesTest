@@ -14,13 +14,12 @@ public class LevelManager : BaseBehaviour
 	public Camera mainCamera;
 
 	Action<float, float> SetMinMaxDifficulty;
-	Action<float> SetBonusPercent;
+	float currentBonusPercent;
 	int currentLevel;
 
-	public void Init(Action<float, float> setMinMaxDifficulty, Action<float> setBonusPercent)
+	public void Init(Action<float, float> setMinMaxDifficulty)
 	{
 		SetMinMaxDifficulty = setMinMaxDifficulty;
-		SetBonusPercent = setBonusPercent;
 
 		currentLevel = 0;
 
@@ -44,12 +43,17 @@ public class LevelManager : BaseBehaviour
 
 			RenderSettings.subtractiveShadowColor = Color.Lerp(currentSettings.shadowColor, nextSettings.shadowColor, timer / blendDuration);
 
+			currentBonusPercent = Mathf.Lerp(currentSettings.bonusPercent, nextSettings.bonusPercent, timer / blendDuration);
+
 			yield return null;
 		}
 
 		mainCamera.backgroundColor = nextSettings.environmentColor;
 		RenderSettings.fogColor = nextSettings.environmentColor;
 		RenderSettings.subtractiveShadowColor = nextSettings.shadowColor;
+		currentBonusPercent = nextSettings.bonusPercent;
+
+		currentLevel = nextLevel;
 	}
 
 	public void BlendToNewLevel()
@@ -60,6 +64,14 @@ public class LevelManager : BaseBehaviour
 		int newLevel = UnityEngine.Random.Range(0, levelSettings.Length - 1);
 
 		StartCoroutine(StartBlending(newLevel));
+	}
+
+	public float GetBonusPercent()
+	{
+		if(!CheckInitialized())
+			return 0;
+
+		return currentBonusPercent;
 	}
 
 	[Serializable]
