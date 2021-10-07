@@ -22,6 +22,7 @@ public class LevelManager : BaseBehaviour
 		SetMinMaxDifficulty = setMinMaxDifficulty;
 
 		currentLevel = 0;
+		currentBonusPercent = levelSettings[currentLevel].bonusPercent;
 
 		InitInternal();
 	}
