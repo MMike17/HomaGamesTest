@@ -84,4 +84,12 @@ public class ScoreManager : BaseBehaviour
 		multiplierDisplay.gameObject.SetActive(false);
 		multiplierDisplay.text = "x" + currentScoreMultiplier;
 	}
+
+	public float GetCurrentScore()
+	{
+		if(!CheckInitialized())
+			return 0;
+
+		return currentPlayerScore;
+	}
 }

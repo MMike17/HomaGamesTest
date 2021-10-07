@@ -71,6 +71,14 @@ public static class DataManager
 
 #region Files
 
+	/// <summary>Returns true if the file exists</summary>
+	public static bool DoesFileExist(string relativePath)
+	{
+		string completePath = Path.Combine(localPath, relativePath) + ".bin";
+
+		return File.Exists(completePath);
+	}
+
 	/// <summary>Saves object to file (if the object is serializable)</summary>
 	public static void SaveObject<T>(T data, string relativePath)
 	{

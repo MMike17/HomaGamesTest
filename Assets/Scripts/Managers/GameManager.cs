@@ -4,8 +4,11 @@ using static DataManager;
 /// <summary>Manages all the game flow</summary>
 public class GameManager : MonoBehaviour
 {
+	const string SAVE_FILE_NAME = "playerScore";
+
 	[Header("Settings")]
 	public LogLevel dataManagerLogLevel;
+	public int maxScoreHistory;
 
 	[Header("Managers")]
 	public VFXManager vfxManager;
@@ -17,6 +20,8 @@ public class GameManager : MonoBehaviour
 	[Header("Scene references")]
 	public ShipController shipController;
 
+	PlayerScore playerScore;
+
 	void Awake()
 	{
 		DataManager.SetLogLevel(dataManagerLogLevel);
@@ -25,6 +30,14 @@ public class GameManager : MonoBehaviour
 		InitializeOthers();
 
 		Debug.Log("Initialization done !");
+	}
+
+	void LoadLocalData()
+	{
+		if(DataManager.DoesFileExist(SAVE_FILE_NAME))
+			playerScore = DataManager.LoadObjectAtPath<PlayerScore>(SAVE_FILE_NAME);
+		else
+			playerScore = new PlayerScore();
 	}
 
 	void Update()
@@ -73,7 +86,14 @@ public class GameManager : MonoBehaviour
 
 	void InitializeOthers()
 	{
-		// TODO : Link end screen to player
-		shipController.Init(() => Debug.Log("Pop end screen"));
+		shipController.Init(() =>
+		{
+			playerScore.scoresHistory.Add(scoreManager.GetCurrentScore());
+			playerScore.TrimHistory(maxScoreHistory);
+
+			DataManager.SaveObject(playerScore, SAVE_FILE_NAME);
+
+			// TODO : Link end screen to player and give all score history
+		});
 	}
 }
