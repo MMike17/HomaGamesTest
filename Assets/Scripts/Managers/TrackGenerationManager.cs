@@ -16,6 +16,7 @@ public class TrackGenerationManager : BaseBehaviour
 
 	float currentSpeed => Mathf.Lerp(minSpeed, maxSpeed, currentDifficulty);
 	float currentFrequency => Mathf.Lerp(minFrequency, maxFrequency, currentDifficulty);
+	GameObject lastSpawnedObstacle => spawnedObstacle[spawnedObstacle.Count - 1];
 
 	List<GameObject> spawnedObstacle;
 	List<int> lastObstacles;
@@ -34,17 +35,30 @@ public class TrackGenerationManager : BaseBehaviour
 		if(!initialized)
 			return;
 
-		// TODO : Launch obstacle spawn
+		// detect when we need to spawn obstacles
+		if(spawnedObstacle.Count > 1)
+		{
+			float lapsedTime = Vector3.Distance(obstacleSpawnPoint.position, lastSpawnedObstacle.transform.position) / currentSpeed;
 
+			if(lapsedTime >= currentFrequency)
+				GenerateNextObstacle();
+		}
+		else
+			GenerateNextObstacle();
+
+		// move obstacles
 		List<GameObject> toDestroy = new List<GameObject>();
 
 		spawnedObstacle.ForEach(item =>
 		{
+			// destroys obstacles when they're too far back
 			if(item.transform.position.z <= obstacleDestroyPoint.position.z)
 				toDestroy.Add(item);
+
+			item.transform.Translate(0, 0, -currentSpeed * Time.deltaTime);
 		});
 
-		// destroys obstacles when they're too far back
+		// clean list
 		toDestroy.ForEach(item =>
 		{
 			spawnedObstacle.Remove(item);
@@ -92,7 +106,7 @@ public class TrackGenerationManager : BaseBehaviour
 		// should generate bonus
 		if(UnityEngine.Random.value >= GetBonusPercentile())
 		{
-
+			// TODO : Generate bonus
 		}
 		else // should generate obstacle
 		{
