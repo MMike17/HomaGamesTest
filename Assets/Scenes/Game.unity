@@ -1473,6 +1473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreDisplay: {fileID: 981815797}
+  canvas: {fileID: 870332857}
   sharePanel: {fileID: 572224449}
   shareButton: {fileID: 611774057}
   replayButton: {fileID: 656356328}
@@ -2845,7 +2846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &870332858
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10332,7 +10333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1911827151
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10759,6 +10760,7 @@ MonoBehaviour:
   maxFrequency: 0
   minSize: 0
   maxSize: 0
+  obstaclesPerLevel: 0
   obstacles: []
   obstacleSpawnPoint: {fileID: 660003170}
   obstacleDestroyPoint: {fileID: 145783619}
