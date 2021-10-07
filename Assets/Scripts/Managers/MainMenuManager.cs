@@ -14,7 +14,14 @@ public class MainMenuManager : BaseBehaviour
 
 	public void Init(Action startGame, float highscore)
 	{
-		StartGame = startGame + (() => canvas.SetActive(false));
+		StartGame = () =>
+		{
+			startGame();
+
+			canvas.SetActive(false);
+			gameStarted = true;
+		};
+
 		highscoreDisplay.text = "Highscore : " + highscore;
 
 		gameStarted = false;
@@ -27,10 +34,13 @@ public class MainMenuManager : BaseBehaviour
 		// start on tap
 		if(!gameStarted)
 		{
-			if(Input.touchCount > 0)
+			if(Application.isMobilePlatform)
+			{
+				if(Input.touchCount > 0)
+					StartGame();
+			}
+			else if(Input.GetMouseButtonDown(0))
 				StartGame();
-
-			gameStarted = true;
 		}
 	}
 }
