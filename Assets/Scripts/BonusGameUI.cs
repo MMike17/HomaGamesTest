@@ -7,9 +7,6 @@ using static BonusManager;
 [RequireComponent(typeof(Animator))]
 public class BonusGameUI : BaseBehaviour
 {
-	// TODO : Make "Win" animation in editor
-	// TODO : Make "Lose" animation in editor
-
 	[Header("Settings")]
 	public float distanceActivation;
 
@@ -39,9 +36,13 @@ public class BonusGameUI : BaseBehaviour
 			if(!isPlaying)
 				return;
 
-			if(Vector3.Distance(leftImage.transform.position, winButton.transform.position) <= distanceActivation)
+			if(Vector3.Distance(leftImage.transform.parent.position, winButton.transform.position) <= distanceActivation)
 			{
 				SetBonusWon();
+
+				leftImage.transform.parent.position = winButton.transform.position;
+				rightImage.transform.parent.position = winButton.transform.position;
+
 				anim.Play("Win");
 			}
 			else
@@ -58,8 +59,8 @@ public class BonusGameUI : BaseBehaviour
 	{
 		if(isPlaying)
 		{
-			leftImage.transform.position = Vector3.MoveTowards(leftImage.transform.position, winButton.transform.position, speed * Time.deltaTime);
-			rightImage.transform.position = Vector3.MoveTowards(rightImage.transform.position, winButton.transform.position, speed * Time.deltaTime);
+			leftImage.transform.parent.position = Vector3.MoveTowards(leftImage.transform.parent.position, winButton.transform.position, speed * Time.deltaTime);
+			rightImage.transform.parent.position = Vector3.MoveTowards(rightImage.transform.parent.position, winButton.transform.position, speed * Time.deltaTime);
 		}
 	}
 
@@ -72,9 +73,9 @@ public class BonusGameUI : BaseBehaviour
 		speed = Vector3.Distance(leftStartPoint.position, winButton.transform.position) / delay;
 
 		leftImage.sprite = bonus.leftPart;
-		leftImage.transform.position = leftStartPoint.position;
+		leftImage.transform.parent.position = leftStartPoint.position;
 
 		rightImage.sprite = bonus.rightPart;
-		rightImage.transform.position = rightStartPoint.position;
+		rightImage.transform.parent.position = rightStartPoint.position;
 	}
 }
