@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
 		trackGenerationManager.Init(
 			shipController.transform.position.z,
 			() => scoreManager.AddScore(levelManager.GetScorePerObstacle()),
+			() => levelManager.BlendToNewLevel(),
 			delay =>
 			{
 				bonusManager.SpawnBonus(delay);

@@ -24,6 +24,13 @@ public class LevelManager : BaseBehaviour
 		currentLevel = 0;
 		currentBonusPercent = levelSettings[currentLevel].bonusPercent;
 
+		ApplySettings(
+			levelSettings[currentLevel].environmentColor,
+			levelSettings[currentLevel].shadowColor,
+			levelSettings[currentLevel].bonusPercent,
+			levelSettings[currentLevel].scorePerObstacle
+		);
+
 		InitInternal();
 	}
 
@@ -41,25 +48,34 @@ public class LevelManager : BaseBehaviour
 
 			Color environmentColor = Color.Lerp(currentSettings.environmentColor, nextSettings.environmentColor, percentile);
 
-			mainCamera.backgroundColor = environmentColor;
-			RenderSettings.fogColor = environmentColor;
-
-			RenderSettings.subtractiveShadowColor = Color.Lerp(currentSettings.shadowColor, nextSettings.shadowColor, percentile);
-
-			currentBonusPercent = Mathf.Lerp(currentSettings.bonusPercent, nextSettings.bonusPercent, percentile);
-			currentScorePerObstacle = Mathf.RoundToInt(Mathf.Lerp(currentSettings.scorePerObstacle, nextSettings.scorePerObstacle, percentile));
+			ApplySettings(
+				environmentColor,
+				Color.Lerp(currentSettings.shadowColor, nextSettings.shadowColor, percentile),
+				Mathf.Lerp(currentSettings.bonusPercent, nextSettings.bonusPercent, percentile),
+				Mathf.RoundToInt(Mathf.Lerp(currentSettings.scorePerObstacle, nextSettings.scorePerObstacle, percentile))
+			);
 
 			yield return null;
 		}
 
-		mainCamera.backgroundColor = nextSettings.environmentColor;
-		RenderSettings.fogColor = nextSettings.environmentColor;
-		RenderSettings.subtractiveShadowColor = nextSettings.shadowColor;
-
-		currentBonusPercent = nextSettings.bonusPercent;
-		currentScorePerObstacle = nextSettings.scorePerObstacle;
+		ApplySettings(
+			nextSettings.environmentColor,
+			nextSettings.shadowColor,
+			nextSettings.bonusPercent,
+			nextSettings.scorePerObstacle
+		);
 
 		currentLevel = nextLevel;
+	}
+
+	void ApplySettings(Color environmentColor, Color shadowColor, float bonusPercent, int scorePerObstacle)
+	{
+		mainCamera.backgroundColor = environmentColor;
+		RenderSettings.fogColor = environmentColor;
+		RenderSettings.subtractiveShadowColor = shadowColor;
+
+		currentBonusPercent = bonusPercent;
+		currentScorePerObstacle = scorePerObstacle;
 	}
 
 	// TODO : Start level blending

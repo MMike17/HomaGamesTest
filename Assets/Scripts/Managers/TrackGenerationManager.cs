@@ -8,7 +8,7 @@ public class TrackGenerationManager : BaseBehaviour
 	[Header("Settings")]
 	public int randomizationMemory;
 	public float minSpeed, maxSpeed, minFrequency, maxFrequency;
-	public int minSize, maxSize;
+	public int minSize, maxSize, obstaclesPerLevel;
 
 	[Header("Scene references")]
 	public GameObject[] obstacles;
@@ -22,15 +22,17 @@ public class TrackGenerationManager : BaseBehaviour
 	List<int> lastObstacles;
 	Func<float> GetBonusPercentile;
 	Action<float> GenerateBonus;
-	Action GiveScore;
+	Action GiveScore, ChangeLevel;
 	float currentDifficulty, currentSize, sizeCount, shipControllerZPos;
+	int levelObstaclesCount;
 	bool gamePaused;
 
-	public void Init(float shipControllerZPos, Action giveScore, Action<float> generateBonus, Func<float> getBonusPercentile)
+	public void Init(float shipControllerZPos, Action giveScore, Action changeLevel, Action<float> generateBonus, Func<float> getBonusPercentile)
 	{
 		this.shipControllerZPos = shipControllerZPos;
 
 		GiveScore = giveScore;
+		ChangeLevel = changeLevel;
 		GenerateBonus = generateBonus;
 		GetBonusPercentile = getBonusPercentile;
 
@@ -38,6 +40,7 @@ public class TrackGenerationManager : BaseBehaviour
 		lastObstacles = new List<int>();
 
 		gamePaused = true;
+		levelObstaclesCount = 0;
 
 		InitInternal();
 	}
@@ -119,6 +122,13 @@ public class TrackGenerationManager : BaseBehaviour
 
 	void GenerateNextObstacle()
 	{
+		// change level
+		if(levelObstaclesCount >= obstaclesPerLevel)
+		{
+			ChangeLevel();
+			levelObstaclesCount = 0;
+		}
+
 		// should generate bonus
 		if(UnityEngine.Random.value >= GetBonusPercentile())
 			GenerateBonus(currentFrequency);
@@ -132,6 +142,8 @@ public class TrackGenerationManager : BaseBehaviour
 
 			spawnedObstacle.Add(newObstacle);
 		}
+
+		levelObstaclesCount++;
 	}
 
 	public void SetDifficulty(float difficulty)
