@@ -48,15 +48,8 @@ public class TrackGenerationManager : BaseBehaviour
 			currentSize = minSize;
 	}
 
-	void GenerateNextObstacle()
+	int PickNewObstacle()
 	{
-		bool hasBonus = false;
-
-		if(UnityEngine.Random.value >= GetBonusPercentile())
-			hasBonus = true;
-
-		ComputeCurrentSize();
-
 		List<int> obstacleIndexes = new List<int>();
 
 		for (int i = 0; i < obstacles.Length; i++)
@@ -72,7 +65,24 @@ public class TrackGenerationManager : BaseBehaviour
 		if(obstacleIndexes.Count > randomizationMemory)
 			obstacleIndexes.RemoveAt(0);
 
-		// TODO : Spawn obstacle
+		return newObstacle;
+	}
+
+	void GenerateNextObstacle()
+	{
+		// should generate bonus
+		if(UnityEngine.Random.value >= GetBonusPercentile())
+		{
+
+		}
+		else // should generate obstacle
+		{
+			ComputeCurrentSize();
+
+			int newObstacleIndex = PickNewObstacle();
+
+			// TODO : Spawn obstacle
+		}
 	}
 
 	public void SetDifficulty(float difficulty)
