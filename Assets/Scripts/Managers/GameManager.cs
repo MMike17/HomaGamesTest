@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
 	{
 		DataManager.SetLogLevel(dataManagerLogLevel);
 
+		LoadLocalData();
+
 		InitializeManagers();
 		InitializeOthers();
 
