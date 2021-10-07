@@ -15,7 +15,7 @@ public class LevelManager : BaseBehaviour
 
 	Action<float, float> SetMinMaxDifficulty;
 	float currentBonusPercent;
-	int currentLevel;
+	int currentLevel, currentScorePerObstacle;
 
 	public void Init(Action<float, float> setMinMaxDifficulty)
 	{
@@ -37,14 +37,17 @@ public class LevelManager : BaseBehaviour
 		{
 			timer += Time.deltaTime;
 
-			Color environmentColor = Color.Lerp(currentSettings.environmentColor, nextSettings.environmentColor, timer / blendDuration);
+			float percentile = timer / blendDuration;
+
+			Color environmentColor = Color.Lerp(currentSettings.environmentColor, nextSettings.environmentColor, percentile);
 
 			mainCamera.backgroundColor = environmentColor;
 			RenderSettings.fogColor = environmentColor;
 
-			RenderSettings.subtractiveShadowColor = Color.Lerp(currentSettings.shadowColor, nextSettings.shadowColor, timer / blendDuration);
+			RenderSettings.subtractiveShadowColor = Color.Lerp(currentSettings.shadowColor, nextSettings.shadowColor, percentile);
 
-			currentBonusPercent = Mathf.Lerp(currentSettings.bonusPercent, nextSettings.bonusPercent, timer / blendDuration);
+			currentBonusPercent = Mathf.Lerp(currentSettings.bonusPercent, nextSettings.bonusPercent, percentile);
+			currentScorePerObstacle = Mathf.RoundToInt(Mathf.Lerp(currentSettings.scorePerObstacle, nextSettings.scorePerObstacle, percentile));
 
 			yield return null;
 		}
@@ -52,7 +55,9 @@ public class LevelManager : BaseBehaviour
 		mainCamera.backgroundColor = nextSettings.environmentColor;
 		RenderSettings.fogColor = nextSettings.environmentColor;
 		RenderSettings.subtractiveShadowColor = nextSettings.shadowColor;
+
 		currentBonusPercent = nextSettings.bonusPercent;
+		currentScorePerObstacle = nextSettings.scorePerObstacle;
 
 		currentLevel = nextLevel;
 	}
@@ -81,5 +86,6 @@ public class LevelManager : BaseBehaviour
 		[Range(0, 1)]
 		public float minDifficulty, maxDifficulty, bonusPercent;
 		public Color environmentColor, shadowColor;
+		public int scorePerObstacle;
 	}
 }

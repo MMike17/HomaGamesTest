@@ -5,7 +5,6 @@ using UnityEngine;
 public class ScoreManager : BaseBehaviour
 {
 	[Header("Settings")]
-	public int scorePerObstacle;
 	public int scoreDecimals;
 
 	[Header("Scene references")]
