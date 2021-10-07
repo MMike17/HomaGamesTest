@@ -43,10 +43,25 @@ public class GameManager : MonoBehaviour
 			(min, max) => trackGenerationManager.SetDifficulty(Random.Range(min, max))
 		);
 		trackGenerationManager.Init(
-			() => Debug.Log("generate bonus"),
+			delay => bonusManager.SpawnBonus(delay),
 			() => { return levelManager.GetBonusPercent(); }
 		);
-		bonusManager.Init();
+		bonusManager.Init(
+			bonusState =>
+			{
+				// TODO : Manage bonus state
+				if(bonusState)
+				{
+					// increase score multiplier
+
+					shipController.GetBonus();
+				}
+				else
+				{
+					// stop score multiplier
+				}
+			}
+		);
 
 		// TODO : Initialize managers
 	}
