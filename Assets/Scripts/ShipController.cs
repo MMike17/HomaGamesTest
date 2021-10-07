@@ -34,9 +34,9 @@ public class ShipController : BaseBehaviour
 		shipCollider = GetComponentInChildren<Collider>();
 		halfRange = Mathf.Abs(minX - maxX) / 2;
 
-		FreezeShip();
-
 		InitInternal();
+
+		FreezeShip();
 	}
 
 	void Update()
