@@ -15,7 +15,7 @@ public class ShipController : BaseBehaviour
 	Animator anim;
 	Action ShowEndScreen;
 	float horizontalInput, halfRange;
-	bool gamePaused;
+	bool gamePaused, blockInput;
 
 	void OnDrawGizmos()
 	{
@@ -58,6 +58,9 @@ public class ShipController : BaseBehaviour
 		}
 		else
 			horizontalInput = Input.GetAxis("Horizontal");
+
+		if(blockInput)
+			horizontalInput = 0;
 	}
 
 	void Movement()
@@ -103,6 +106,22 @@ public class ShipController : BaseBehaviour
 			return;
 
 		gamePaused = true;
+	}
+
+	public void BlockInput()
+	{
+		if(!CheckInitialized())
+			return;
+
+		blockInput = true;
+	}
+
+	public void UnlockInput()
+	{
+		if(!CheckInitialized())
+			return;
+
+		blockInput = false;
 	}
 
 	public void Restart()

@@ -43,7 +43,11 @@ public class GameManager : MonoBehaviour
 			(min, max) => trackGenerationManager.SetDifficulty(Random.Range(min, max))
 		);
 		trackGenerationManager.Init(
-			delay => bonusManager.SpawnBonus(delay),
+			delay =>
+			{
+				bonusManager.SpawnBonus(delay);
+				shipController.BlockInput();
+			},
 			() => { return levelManager.GetBonusPercent(); }
 		);
 		bonusManager.Init(
@@ -60,6 +64,8 @@ public class GameManager : MonoBehaviour
 				{
 					// stop score multiplier
 				}
+
+				shipController.UnlockInput();
 			}
 		);
 
