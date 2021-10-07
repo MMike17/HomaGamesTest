@@ -39,10 +39,7 @@ public class GameManager : MonoBehaviour
 	{
 		vfxManager.Init();
 		levelManager.Init(
-			(min, max) =>
-			{
-				// TODO : Set min max to obstacle spawner
-			}
+			(min, max) => trackGenerationManager.SetDifficulty(Random.Range(min, max))
 		);
 		trackGenerationManager.Init(
 			() => Debug.Log("generate bonus"),
