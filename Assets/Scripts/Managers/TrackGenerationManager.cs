@@ -100,8 +100,8 @@ public class TrackGenerationManager : BaseBehaviour
 		obstacleIndexes.Add(newObstacle);
 
 		// keep memory size consistant
-		if(obstacleIndexes.Count > randomizationMemory)
-			obstacleIndexes.RemoveAt(0);
+		if(lastObstacles.Count > randomizationMemory)
+			lastObstacles.RemoveAt(0);
 
 		return newObstacle;
 	}
