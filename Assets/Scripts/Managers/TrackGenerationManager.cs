@@ -21,10 +21,12 @@ public class TrackGenerationManager : BaseBehaviour
 	List<GameObject> spawnedObstacle;
 	List<int> lastObstacles;
 	Func<float> GetBonusPercentile;
+	Action GenerateBonus;
 	float currentDifficulty, currentSize, sizeCount;
 
-	public void Init(Func<float> getBonusPercentile)
+	public void Init(Action generateBonus, Func<float> getBonusPercentile)
 	{
+		GenerateBonus = generateBonus;
 		GetBonusPercentile = getBonusPercentile;
 
 		InitInternal();
@@ -105,9 +107,7 @@ public class TrackGenerationManager : BaseBehaviour
 	{
 		// should generate bonus
 		if(UnityEngine.Random.value >= GetBonusPercentile())
-		{
-			// TODO : Generate bonus
-		}
+			GenerateBonus();
 		else // should generate obstacle
 		{
 			ComputeCurrentSize();

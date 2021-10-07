@@ -8,7 +8,6 @@ public class ShipController : BaseBehaviour
 	const float CRASH_ANIM_DURATION = 1.5f;
 
 	[Header("Speed")]
-	public float forwardSpeed;
 	public float minX, maxX, lateralSpeed;
 	public AnimationCurve smoothingCurve;
 
