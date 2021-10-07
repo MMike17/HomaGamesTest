@@ -6,6 +6,8 @@ public class ScoreManager : BaseBehaviour
 {
 	[Header("Settings")]
 	public int scoreDecimals;
+	[Range(0, 1)]
+	public float mulitplierPerBonus;
 
 	[Header("Scene references")]
 	public TextMeshProUGUI scoreDisplay;
@@ -61,12 +63,12 @@ public class ScoreManager : BaseBehaviour
 		scoreDisplay.text = ClampNumberToDecimals(currentPlayerScore);
 	}
 
-	public void AddMultiplier(float multiplier)
+	public void AddMultiplier()
 	{
 		if(!CheckInitialized())
 			return;
 
-		currentScoreMultiplier += multiplier;
+		currentScoreMultiplier += mulitplierPerBonus;
 
 		multiplierDisplay.gameObject.SetActive(true);
 		multiplierDisplay.text = "x" + currentScoreMultiplier;

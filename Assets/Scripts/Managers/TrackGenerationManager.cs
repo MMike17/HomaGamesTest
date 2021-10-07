@@ -16,20 +16,24 @@ public class TrackGenerationManager : BaseBehaviour
 
 	float currentSpeed => Mathf.Lerp(minSpeed, maxSpeed, currentDifficulty);
 	float currentFrequency => Mathf.Lerp(minFrequency, maxFrequency, currentDifficulty);
-	GameObject lastSpawnedObstacle => spawnedObstacle[spawnedObstacle.Count - 1];
+	Transform lastSpawnedObstacle => spawnedObstacle[spawnedObstacle.Count - 1].GetTransform();
 
-	List<GameObject> spawnedObstacle;
+	List<Obstacle> spawnedObstacle;
 	List<int> lastObstacles;
 	Func<float> GetBonusPercentile;
 	Action<float> GenerateBonus;
-	float currentDifficulty, currentSize, sizeCount;
+	Action GiveScore;
+	float currentDifficulty, currentSize, sizeCount, shipControllerZPos;
 
-	public void Init(Action<float> generateBonus, Func<float> getBonusPercentile)
+	public void Init(float shipControllerZPos, Action giveScore, Action<float> generateBonus, Func<float> getBonusPercentile)
 	{
+		this.shipControllerZPos = shipControllerZPos;
+
+		GiveScore = giveScore;
 		GenerateBonus = generateBonus;
 		GetBonusPercentile = getBonusPercentile;
 
-		spawnedObstacle = new List<GameObject>();
+		spawnedObstacle = new List<Obstacle>();
 		lastObstacles = new List<int>();
 
 		InitInternal();
@@ -41,7 +45,7 @@ public class TrackGenerationManager : BaseBehaviour
 			return;
 
 		// detect when we need to spawn obstacles
-		if(spawnedObstacle.Count > 1)
+		if(spawnedObstacle.Count > 0)
 		{
 			float lapsedTime = Vector3.Distance(obstacleSpawnPoint.position, lastSpawnedObstacle.transform.position) / currentSpeed;
 
@@ -52,22 +56,26 @@ public class TrackGenerationManager : BaseBehaviour
 			GenerateNextObstacle();
 
 		// move obstacles
-		List<GameObject> toDestroy = new List<GameObject>();
+		List<Obstacle> toDestroy = new List<Obstacle>();
 
 		spawnedObstacle.ForEach(item =>
 		{
 			// destroys obstacles when they're too far back
-			if(item.transform.position.z <= obstacleDestroyPoint.position.z)
+			if(item.GetTransform().position.z <= obstacleDestroyPoint.position.z)
 				toDestroy.Add(item);
 
-			item.transform.Translate(0, 0, -currentSpeed * Time.deltaTime);
+			// give score
+			if(item.CheckGiveScore())
+				GiveScore();
+
+			item.GetTransform().Translate(0, 0, -currentSpeed * Time.deltaTime);
 		});
 
 		// clean list
 		toDestroy.ForEach(item =>
 		{
 			spawnedObstacle.Remove(item);
-			Destroy(item);
+			Destroy(item.GetTransform().gameObject);
 		});
 	}
 
@@ -116,9 +124,10 @@ public class TrackGenerationManager : BaseBehaviour
 			ComputeCurrentSize();
 			int newObstacleIndex = PickNewObstacle();
 
-			GameObject obstacle = Instantiate(obstacles[newObstacleIndex], obstacleSpawnPoint.position, Quaternion.identity);
+			GameObject obstacleObject = Instantiate(obstacles[newObstacleIndex], obstacleSpawnPoint.position, Quaternion.identity);
+			Obstacle newObstacle = new Obstacle(obstacleObject.transform, shipControllerZPos);
 
-			spawnedObstacle.Add(obstacle);
+			spawnedObstacle.Add(newObstacle);
 		}
 	}
 
@@ -128,5 +137,39 @@ public class TrackGenerationManager : BaseBehaviour
 			return;
 
 		currentDifficulty = difficulty;
+	}
+
+	public class Obstacle
+	{
+		Transform obstacle;
+		float limit;
+		bool isDone;
+
+		public Obstacle(Transform obstacle, float limit)
+		{
+			this.obstacle = obstacle;
+			this.limit = limit;
+
+			isDone = false;
+		}
+
+		public bool CheckGiveScore()
+		{
+			if(isDone)
+				return false;
+
+			if(obstacle.position.z <= limit)
+			{
+				isDone = true;
+				return true;
+			}
+
+			return false;
+		}
+
+		public Transform GetTransform()
+		{
+			return obstacle;
+		}
 	}
 }

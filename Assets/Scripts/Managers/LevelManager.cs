@@ -62,6 +62,7 @@ public class LevelManager : BaseBehaviour
 		currentLevel = nextLevel;
 	}
 
+	// TODO : Start level blending
 	public void BlendToNewLevel()
 	{
 		if(!CheckInitialized())
@@ -78,6 +79,14 @@ public class LevelManager : BaseBehaviour
 			return 0;
 
 		return currentBonusPercent;
+	}
+
+	public int GetScorePerObstacle()
+	{
+		if(!CheckInitialized())
+			return 0;
+
+		return currentScorePerObstacle;
 	}
 
 	[Serializable]

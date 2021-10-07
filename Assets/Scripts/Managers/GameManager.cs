@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 	public LevelManager levelManager;
 	public TrackGenerationManager trackGenerationManager;
 	public BonusManager bonusManager;
+	public ScoreManager scoreManager;
 
 	[Header("Scene references")]
 	public ShipController shipController;
@@ -43,6 +44,8 @@ public class GameManager : MonoBehaviour
 			(min, max) => trackGenerationManager.SetDifficulty(Random.Range(min, max))
 		);
 		trackGenerationManager.Init(
+			shipController.transform.position.z,
+			() => scoreManager.AddScore(levelManager.GetScorePerObstacle()),
 			delay =>
 			{
 				bonusManager.SpawnBonus(delay);
@@ -53,17 +56,13 @@ public class GameManager : MonoBehaviour
 		bonusManager.Init(
 			bonusState =>
 			{
-				// TODO : Manage bonus state
 				if(bonusState)
 				{
-					// increase score multiplier
-
+					scoreManager.AddMultiplier();
 					shipController.GetBonus();
 				}
 				else
-				{
-					// stop score multiplier
-				}
+					scoreManager.CancelMultiplier();
 
 				shipController.UnlockInput();
 			}
@@ -74,6 +73,7 @@ public class GameManager : MonoBehaviour
 
 	void InitializeOthers()
 	{
+		// TODO : Link end screen to player
 		shipController.Init(() => Debug.Log("Pop end screen"));
 	}
 }
