@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 	public BonusManager bonusManager;
 	public ScoreManager scoreManager;
 	public MainMenuManager mainMenuManager;
+	public EndScreenManager endScreenManager;
 
 	[Header("Scene references")]
 	public ShipController shipController;
@@ -90,8 +91,7 @@ public class GameManager : MonoBehaviour
 			},
 			playerScore.highscore
 		);
-
-		// TODO : Initialize managers
+		endScreenManager.Init();
 	}
 
 	void InitializeOthers()
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 			playerScore.AddScore(scoreManager.GetCurrentScore(), maxScoreHistory);
 			DataManager.SaveObject(playerScore, SAVE_FILE_NAME);
 
-			// TODO : Link end screen to player and give all score history
+			endScreenManager.DisplayData(playerScore.scoresHistory, playerScore.highscore);
 		});
 	}
 }
