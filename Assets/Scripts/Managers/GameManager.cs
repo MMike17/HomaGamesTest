@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 	public VFXManager vfxManager;
 	public LevelManager levelManager;
 	public TrackGenerationManager trackGenerationManager;
+	public BonusManager bonusManager;
 
 	[Header("Scene references")]
 	public ShipController shipController;
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
 			() => Debug.Log("generate bonus"),
 			() => { return levelManager.GetBonusPercent(); }
 		);
+		bonusManager.Init();
 
 		// TODO : Initialize managers
 	}

@@ -11,6 +11,16 @@ public class BonusManager : BaseBehaviour
 
 	List<Bonus> spawnedBonus;
 
+	public void Init()
+	{
+		InitInternal();
+	}
+
+	public void SpawnBonus()
+	{
+		// TODO : Spawn bonus
+	}
+
 	[Serializable]
 	public class Bonus
 	{
