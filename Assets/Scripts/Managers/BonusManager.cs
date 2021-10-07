@@ -10,8 +10,6 @@ public class BonusManager : BaseBehaviour
 	public Bonus[] bonuses;
 
 	[Header("Scene references")]
-	public Transform bonusHolder;
-	public Transform leftSpawnPoint, rightSpawnPoint;
 	public BonusGameUI bonusGameUI;
 
 	List<int> lastBonuses;
