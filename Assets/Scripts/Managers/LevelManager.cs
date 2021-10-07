@@ -78,7 +78,6 @@ public class LevelManager : BaseBehaviour
 		currentScorePerObstacle = scorePerObstacle;
 	}
 
-	// TODO : Start level blending
 	public void BlendToNewLevel()
 	{
 		if(!CheckInitialized())
