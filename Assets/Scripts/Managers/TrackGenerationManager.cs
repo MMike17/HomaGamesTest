@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,16 +6,24 @@ using UnityEngine;
 public class TrackGenerationManager : BaseBehaviour
 {
 	[Header("Settings")]
-	int randomizationMemory;
+	public int randomizationMemory;
+	public float minSpeed, maxSpeed, minFrequency, maxFrequency;
+	public int minSize, maxSize;
 
 	[Header("Scene references")]
 	public GameObject[] obstacles;
 
-	List<int> lastObstacles;
-	float currentDifficulty;
+	float currentSpeed => Mathf.Lerp(minSpeed, maxSpeed, currentDifficulty);
+	float currentFrequency => Mathf.Lerp(minFrequency, maxFrequency, currentDifficulty);
 
-	public void Init()
+	List<int> lastObstacles;
+	Func<float> GetBonusPercentile;
+	float currentDifficulty, currentSize, sizeCount;
+
+	public void Init(Func<float> getBonusPercentile)
 	{
+		GetBonusPercentile = getBonusPercentile;
+
 		InitInternal();
 	}
 
@@ -24,8 +33,30 @@ public class TrackGenerationManager : BaseBehaviour
 			return;
 	}
 
-	void SpawnObstacle()
+	void ComputeCurrentSize()
 	{
+		float proportionalSize = Mathf.Lerp(minSize, maxSize, currentDifficulty);
+		sizeCount += proportionalSize - minSize;
+
+		// switch between two sizes depending on additive lerp frequence
+		if(sizeCount >= maxSize)
+		{
+			currentSize = maxSize;
+			sizeCount = sizeCount - maxSize + minSize;
+		}
+		else
+			currentSize = minSize;
+	}
+
+	void GenerateNextObstacle()
+	{
+		bool hasBonus = false;
+
+		if(UnityEngine.Random.value >= GetBonusPercentile())
+			hasBonus = true;
+
+		ComputeCurrentSize();
+
 		List<int> obstacleIndexes = new List<int>();
 
 		for (int i = 0; i < obstacles.Length; i++)
@@ -34,7 +65,7 @@ public class TrackGenerationManager : BaseBehaviour
 		// only keep new indexes
 		lastObstacles.ForEach(item => obstacleIndexes.Remove(item));
 
-		int newObstacle = Random.Range(0, obstacleIndexes.Count - 1);
+		int newObstacle = UnityEngine.Random.Range(0, obstacleIndexes.Count - 1);
 		obstacleIndexes.Add(newObstacle);
 
 		// keep memory size consistant
