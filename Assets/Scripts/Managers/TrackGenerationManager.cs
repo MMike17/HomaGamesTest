@@ -147,6 +147,8 @@ public class TrackGenerationManager : BaseBehaviour
 		if(!CheckInitialized())
 			return;
 
+		// destroy all obstacles
+
 		gamePaused = false;
 	}
 

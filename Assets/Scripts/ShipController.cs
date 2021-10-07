@@ -5,10 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class ShipController : BaseBehaviour
 {
-	const float CRASH_ANIM_DURATION = 1.5f;
-
 	[Header("Speed")]
-	public float minX, maxX, lateralSpeed;
+	public float minX;
+	public float maxX, lateralSpeed;
 	public AnimationCurve smoothingCurve;
 
 	Collider shipCollider;
@@ -34,6 +33,8 @@ public class ShipController : BaseBehaviour
 		anim = GetComponent<Animator>();
 		shipCollider = GetComponentInChildren<Collider>();
 		halfRange = Mathf.Abs(minX - maxX) / 2;
+
+		FreezeShip();
 
 		InitInternal();
 	}
@@ -86,7 +87,8 @@ public class ShipController : BaseBehaviour
 			shipCollider.enabled = false;
 			anim.Play("Crash");
 
-			DelayedActionsManager.SceduleAction(ShowEndScreen, CRASH_ANIM_DURATION);
+			ShowEndScreen();
+			FreezeShip();
 		}
 		else
 			Debug.LogError(debugTag + "This shouldn't happen");
@@ -97,6 +99,7 @@ public class ShipController : BaseBehaviour
 		if(!CheckInitialized())
 			return;
 
+		anim.Play("Idle");
 		gamePaused = false;
 	}
 

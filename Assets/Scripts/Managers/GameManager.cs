@@ -45,11 +45,6 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 		DelayedActionsManager.Update(Time.deltaTime);
-
-		// TEST
-		if(Input.GetKeyDown(KeyCode.Backspace))
-			shipController.StartShip();
-		// TEST
 	}
 
 	void InitializeManagers()
@@ -91,13 +86,19 @@ public class GameManager : MonoBehaviour
 			},
 			playerScore.highscore
 		);
-		endScreenManager.Init();
+		endScreenManager.Init(() =>
+		{
+			trackGenerationManager.StartGame();
+			shipController.StartShip();
+		});
 	}
 
 	void InitializeOthers()
 	{
 		shipController.Init(() =>
 		{
+			trackGenerationManager.PauseGame();
+
 			playerScore.AddScore(scoreManager.GetCurrentScore(), maxScoreHistory);
 			DataManager.SaveObject(playerScore, SAVE_FILE_NAME);
 
