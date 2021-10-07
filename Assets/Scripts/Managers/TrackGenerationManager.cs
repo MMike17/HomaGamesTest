@@ -12,10 +12,12 @@ public class TrackGenerationManager : BaseBehaviour
 
 	[Header("Scene references")]
 	public GameObject[] obstacles;
+	public Transform obstacleSpawnPoint, obstacleDestroyPoint;
 
 	float currentSpeed => Mathf.Lerp(minSpeed, maxSpeed, currentDifficulty);
 	float currentFrequency => Mathf.Lerp(minFrequency, maxFrequency, currentDifficulty);
 
+	List<GameObject> spawnedObstacle;
 	List<int> lastObstacles;
 	Func<float> GetBonusPercentile;
 	float currentDifficulty, currentSize, sizeCount;
@@ -31,6 +33,23 @@ public class TrackGenerationManager : BaseBehaviour
 	{
 		if(!initialized)
 			return;
+
+		// TODO : Launch obstacle spawn
+
+		List<GameObject> toDestroy = new List<GameObject>();
+
+		spawnedObstacle.ForEach(item =>
+		{
+			if(item.transform.position.z <= obstacleDestroyPoint.position.z)
+				toDestroy.Add(item);
+		});
+
+		// destroys obstacles when they're too far back
+		toDestroy.ForEach(item =>
+		{
+			spawnedObstacle.Remove(item);
+			Destroy(item);
+		});
 	}
 
 	void ComputeCurrentSize()
@@ -78,10 +97,11 @@ public class TrackGenerationManager : BaseBehaviour
 		else // should generate obstacle
 		{
 			ComputeCurrentSize();
-
 			int newObstacleIndex = PickNewObstacle();
 
-			// TODO : Spawn obstacle
+			GameObject obstacle = Instantiate(obstacles[newObstacleIndex], obstacleSpawnPoint.position, Quaternion.identity);
+
+			spawnedObstacle.Add(obstacle);
 		}
 	}
 
