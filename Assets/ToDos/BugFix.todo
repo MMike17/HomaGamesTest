@@ -15,3 +15,4 @@ x Empty obstacles give points when they shouldn't
 x Fail bonus anim repeats
 - Bonuses and obstacles are not spaced correctly
 - Level not changing
+- Bonus fails too easely

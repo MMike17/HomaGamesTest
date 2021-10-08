@@ -47,6 +47,8 @@ public class BonusGameUI : BaseBehaviour
 
 			if(Vector3.Distance(leftImage.transform.parent.position, winButton.transform.position) <= distanceActivation)
 			{
+				isPlaying = false;
+
 				SetBonusWon();
 
 				leftImage.transform.parent.position = winButton.transform.position;
@@ -56,6 +58,8 @@ public class BonusGameUI : BaseBehaviour
 			}
 			else
 			{
+				isPlaying = false;
+
 				SetBonusLost();
 				anim.Play("Lose");
 			}
@@ -76,6 +80,8 @@ public class BonusGameUI : BaseBehaviour
 			// player is too late
 			if(Vector3.Distance(leftImage.transform.parent.position, winButton.transform.position) <= minDistanceThreshold)
 			{
+				isPlaying = false;
+
 				SetBonusLost();
 				anim.Play("Lose");
 			}
@@ -88,7 +94,8 @@ public class BonusGameUI : BaseBehaviour
 			return;
 
 		// This is so that bonus animations still happen
-		delay -= 0.5f;
+		delay /= 2;
+		// -= 0.5f;
 
 		isPlaying = true;
 		speed = Vector3.Distance(leftStartPoint.position, winButton.transform.position) / delay;
