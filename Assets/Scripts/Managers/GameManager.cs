@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
 	[Header("Settings")]
 	public LogLevel dataManagerLogLevel;
+	public bool isBuild;
 	public int maxScoreHistory;
 
 	[Header("Managers")]
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
 	void Awake()
 	{
 		DataManager.SetLogLevel(dataManagerLogLevel);
+		DataManager.SetRealease(isBuild);
+
 		newHigh = false;
 
 		LoadLocalData();

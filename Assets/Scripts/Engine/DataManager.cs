@@ -9,6 +9,7 @@ public static class DataManager
 	static string debugFlag = "<b>[DataManager]</b> : ";
 	static string localPath = Application.persistentDataPath;
 	static LogLevel debugLevel = LogLevel.LOG;
+	static bool isRelease = false;
 
 	public enum LogLevel
 	{
@@ -21,6 +22,12 @@ public static class DataManager
 	public static void SetLogLevel(LogLevel level)
 	{
 		debugLevel = level;
+	}
+
+	/// <summary>Turns encryption on or off</summary>
+	public static void SetRealease(bool state)
+	{
+		isRelease = state;
 	}
 
 #region Folders
@@ -182,6 +189,9 @@ public static class DataManager
 
 	static string EncryptDecrypt(string data)
 	{
+		if(!isRelease)
+			return data;
+
 		int key = 129;
 		string result = string.Empty;
 
