@@ -14,5 +14,8 @@ x Empty obstacles give points when they shouldn't
 - There are no collisions with the player (why the hell ?)
 x Fail bonus anim repeats
 - Bonuses and obstacles are not spaced correctly
-- Level not changing
-- Bonus fails too easely
+x Level not changing
+x Bonus fails too easely
+- VFX not showing up
+- score per obstacle is not correct above 100
+x level shadow color not changing

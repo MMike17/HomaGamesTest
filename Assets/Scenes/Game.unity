@@ -1113,7 +1113,6 @@ GameObject:
   m_Component:
   - component: {fileID: 312750108}
   - component: {fileID: 312750109}
-  - component: {fileID: 312750110}
   m_Layer: 3
   m_Name: PostProcessVolume
   m_TagString: Untagged
@@ -1152,19 +1151,6 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
---- !u!114 &312750110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312750107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9b9c0ea1a2509543b19791b28a71a54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chromaticAmount: 0
 --- !u!1 &325123187
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,23 +1514,24 @@ MonoBehaviour:
   levelSettings:
   - minDifficulty: 0.2
     maxDifficulty: 0.6
-    bonusPercent: 0.4
+    bonusPercent: 0.2
     environmentColor: {r: 0, g: 0.023268795, b: 0.1, a: 1}
-    shadowColor: {r: 0, g: 0.11538458, b: 0.5, a: 1}
+    lightColor: {r: 0.8, g: 0.8462745, b: 1, a: 1}
     scorePerObstacle: 10
   - minDifficulty: 0.4
     maxDifficulty: 0.8
-    bonusPercent: 0.1
+    bonusPercent: 0.05
     environmentColor: {r: 0.12438191, g: 0, b: 0.15, a: 1}
-    shadowColor: {r: 0.4210527, g: 0, b: 0.5, a: 1}
+    lightColor: {r: 0.9684211, g: 0.8, b: 1, a: 1}
     scorePerObstacle: 12
   - minDifficulty: 0.6
     maxDifficulty: 1
-    bonusPercent: 0.2
-    environmentColor: {r: 0.14901961, g: 0.086928114, b: 0, a: 1}
-    shadowColor: {r: 0.5, g: 0.3026316, b: 0, a: 1}
+    bonusPercent: 0.1
+    environmentColor: {r: 0.14901961, g: 0, b: 0.012418325, a: 1}
+    lightColor: {r: 1, g: 0.8, b: 0.8157895, a: 1}
     scorePerObstacle: 15
   mainCamera: {fileID: 963194227}
+  mainLight: {fileID: 705507994}
 --- !u!1 &460739847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1869,7 +1856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1885,8 +1872,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1959,7 +1946,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1714
+  m_Name: pb_Mesh-44100
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4004,7 +3991,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1702
+  m_Name: pb_Mesh-44088
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10008,7 +9995,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1678
+  m_Name: pb_Mesh-44064
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10304,7 +10291,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1661907101
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15992,11 +15979,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomizationMemory: 2
-  minSpeed: 5
-  maxSpeed: 10
+  speed: 20
   minFrequency: 5
-  maxFrequency: 10
-  obstaclesPerLevel: 5
+  maxFrequency: 15
+  obstaclesPerLevel: 3
   obstacles:
   - {fileID: 1593824515701269868, guid: 0026193126a67ef489a28bb1c7634a89, type: 3}
   - {fileID: 2378801010034978378, guid: 08aabcb718c32d242bc812830ef1272b, type: 3}
@@ -16007,6 +15993,7 @@ MonoBehaviour:
   - {fileID: 6199280911370665642, guid: 0e998e2e4d288c24ca6080ed89dc194d, type: 3}
   - {fileID: 1695955204578864229, guid: d1c0f338df26b024691161af4ef6d0cd, type: 3}
   emptyObstaclePrefab: {fileID: 350902131222184660, guid: 1581626debc685749877d40c39285b2c, type: 3}
+  startTempObstacleSpawnPoint: {fileID: 0}
   obstacleSpawnPoint: {fileID: 660003170}
   obstacleDestroyPoint: {fileID: 145783619}
 --- !u!1 &2081188147
@@ -16063,7 +16050,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51f18cac73bbb344fabae80e1f130c91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceActivation: 5
+  distanceActivation: 10
+  minDistanceThreshold: 0
   bonusColors:
   - {r: 1, g: 0.9166667, b: 0.5, a: 1}
   - {r: 1, g: 0.7924837, b: 0.5019608, a: 1}
@@ -16074,7 +16062,6 @@ MonoBehaviour:
   rightStartPoint: {fileID: 1779300966}
   leftImage: {fileID: 16173923}
   rightImage: {fileID: 778470275}
-  bonusGroup: {fileID: 973834676}
   winButton: {fileID: 1638826128}
 --- !u!95 &2081188150
 Animator:
@@ -16138,7 +16125,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1690
+  m_Name: pb_Mesh-44076
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

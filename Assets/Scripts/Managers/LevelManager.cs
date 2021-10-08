@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>Manages the level effects</summary>
@@ -12,6 +13,7 @@ public class LevelManager : BaseBehaviour
 
 	[Header("Scene references")]
 	public Camera mainCamera;
+	public Light mainLight;
 
 	Action<float, float> SetMinMaxDifficulty;
 	float currentBonusPercent;
@@ -26,7 +28,7 @@ public class LevelManager : BaseBehaviour
 
 		ApplySettings(
 			levelSettings[currentLevel].environmentColor,
-			levelSettings[currentLevel].shadowColor,
+			levelSettings[currentLevel].lightColor,
 			levelSettings[currentLevel].bonusPercent,
 			levelSettings[currentLevel].scorePerObstacle
 		);
@@ -50,7 +52,7 @@ public class LevelManager : BaseBehaviour
 
 			ApplySettings(
 				environmentColor,
-				Color.Lerp(currentSettings.shadowColor, nextSettings.shadowColor, percentile),
+				Color.Lerp(currentSettings.lightColor, nextSettings.lightColor, percentile),
 				Mathf.Lerp(currentSettings.bonusPercent, nextSettings.bonusPercent, percentile),
 				Mathf.RoundToInt(Mathf.Lerp(currentSettings.scorePerObstacle, nextSettings.scorePerObstacle, percentile))
 			);
@@ -60,7 +62,7 @@ public class LevelManager : BaseBehaviour
 
 		ApplySettings(
 			nextSettings.environmentColor,
-			nextSettings.shadowColor,
+			nextSettings.lightColor,
 			nextSettings.bonusPercent,
 			nextSettings.scorePerObstacle
 		);
@@ -68,11 +70,11 @@ public class LevelManager : BaseBehaviour
 		currentLevel = nextLevel;
 	}
 
-	void ApplySettings(Color environmentColor, Color shadowColor, float bonusPercent, int scorePerObstacle)
+	void ApplySettings(Color environmentColor, Color lightColor, float bonusPercent, int scorePerObstacle)
 	{
 		mainCamera.backgroundColor = environmentColor;
 		RenderSettings.fogColor = environmentColor;
-		RenderSettings.subtractiveShadowColor = shadowColor;
+		mainLight.color = lightColor;
 
 		currentBonusPercent = bonusPercent;
 		currentScorePerObstacle = scorePerObstacle;
@@ -83,7 +85,13 @@ public class LevelManager : BaseBehaviour
 		if(!CheckInitialized())
 			return;
 
-		int newLevel = UnityEngine.Random.Range(0, levelSettings.Length - 1);
+		List<int> levelIndexes = new List<int>();
+
+		for (int i = 0; i < levelSettings.Length; i++)
+			levelIndexes.Add(i);
+
+		levelIndexes.Remove(currentLevel);
+		int newLevel = levelIndexes[UnityEngine.Random.Range(0, levelIndexes.Count)];
 
 		StartCoroutine(StartBlending(newLevel));
 	}
@@ -109,7 +117,7 @@ public class LevelManager : BaseBehaviour
 	{
 		[Range(0, 1)]
 		public float minDifficulty, maxDifficulty, bonusPercent;
-		public Color environmentColor, shadowColor;
+		public Color environmentColor, lightColor;
 		public int scorePerObstacle;
 	}
 }
