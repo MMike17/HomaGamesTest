@@ -22,11 +22,14 @@ public class GameManager : MonoBehaviour
 	[Header("Scene references")]
 	public ShipController shipController;
 
+	bool newHigh;
+
 	PlayerScore playerScore;
 
 	void Awake()
 	{
 		DataManager.SetLogLevel(dataManagerLogLevel);
+		newHigh = false;
 
 		LoadLocalData();
 
@@ -41,7 +44,10 @@ public class GameManager : MonoBehaviour
 		if(DataManager.DoesFileExist(SAVE_FILE_NAME))
 			playerScore = DataManager.LoadObjectAtPath<PlayerScore>(SAVE_FILE_NAME);
 		else
+		{
 			playerScore = new PlayerScore();
+			DataManager.SaveObject(playerScore, SAVE_FILE_NAME);
+		}
 	}
 
 	void Update()
@@ -57,7 +63,19 @@ public class GameManager : MonoBehaviour
 		);
 		trackGenerationManager.Init(
 			shipController.transform.position.z,
-			() => scoreManager.AddScore(levelManager.GetScorePerObstacle()),
+			() =>
+			{
+				if(!newHigh)
+					vfxManager.PassedObstacleAnim();
+
+				scoreManager.AddScore(levelManager.GetScorePerObstacle());
+
+				if(scoreManager.GetCurrentScore() > playerScore.highscore)
+				{
+					vfxManager.NewHighAnim();
+					newHigh = true;
+				}
+			},
 			() => levelManager.BlendToNewLevel(),
 			delay =>
 			{
@@ -71,6 +89,7 @@ public class GameManager : MonoBehaviour
 			{
 				if(bonusState)
 				{
+					vfxManager.BonusAnim();
 					scoreManager.AddMultiplier();
 					shipController.GetBonus();
 				}
