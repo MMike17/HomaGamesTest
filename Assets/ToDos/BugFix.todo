@@ -3,5 +3,8 @@ x End screen shows at start of game
 x Post processing settings grabbing doesn't work
 x Local data load has null object
 x Can't start game from main menu
-- Ship can't move at beginning of game
-- Bonus don't show
+x Ship can't move at beginning of game
+x Bonus don't show
+- Bonus are super slow
+- Obstacles spawn too far at the beginning
+- Bonus animations don't show

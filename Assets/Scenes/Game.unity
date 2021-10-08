@@ -3734,7 +3734,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973834674}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -16006,6 +16006,7 @@ MonoBehaviour:
   - {fileID: 6296724218841164124, guid: 99421156701268c48933ae62688b5178, type: 3}
   - {fileID: 6199280911370665642, guid: 0e998e2e4d288c24ca6080ed89dc194d, type: 3}
   - {fileID: 1695955204578864229, guid: d1c0f338df26b024691161af4ef6d0cd, type: 3}
+  emptyObstaclePrefab: {fileID: 350902131222184660, guid: 1581626debc685749877d40c39285b2c, type: 3}
   obstacleSpawnPoint: {fileID: 660003170}
   obstacleDestroyPoint: {fileID: 145783619}
 --- !u!1 &2081188147
@@ -16073,6 +16074,7 @@ MonoBehaviour:
   rightStartPoint: {fileID: 1779300966}
   leftImage: {fileID: 16173923}
   rightImage: {fileID: 778470275}
+  bonusGroup: {fileID: 973834676}
   winButton: {fileID: 1638826128}
 --- !u!95 &2081188150
 Animator:

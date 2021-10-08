@@ -57,6 +57,8 @@ public class BonusGameUI : BaseBehaviour
 			}
 		});
 
+		anim.Play("Hide");
+
 		InitInternal();
 	}
 
@@ -97,6 +99,6 @@ public class BonusGameUI : BaseBehaviour
 		rightImage.color = selectedColor;
 		rightImage.transform.parent.position = rightStartPoint.position;
 
-		anim.Play("Idle");
+		anim.Play("Show");
 	}
 }

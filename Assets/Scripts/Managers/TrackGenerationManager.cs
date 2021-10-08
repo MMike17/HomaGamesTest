@@ -12,6 +12,7 @@ public class TrackGenerationManager : BaseBehaviour
 
 	[Header("Scene references")]
 	public GameObject[] obstacles;
+	public GameObject emptyObstaclePrefab;
 	public Transform obstacleSpawnPoint, obstacleDestroyPoint;
 
 	float currentSpeed => Mathf.Lerp(minSpeed, maxSpeed, currentDifficulty);
@@ -112,11 +113,22 @@ public class TrackGenerationManager : BaseBehaviour
 		{
 			ChangeLevel();
 			levelObstaclesCount = 0;
+
+			Debug.Log("Changed level");
 		}
 
 		// should generate bonus
 		if(UnityEngine.Random.value >= GetBonusPercentile())
+		{
 			GenerateBonus(currentFrequency);
+
+			// generate obstacle because it can't wait until the bonus is done
+			GameObject obstacleObject = Instantiate(emptyObstaclePrefab, obstacleSpawnPoint.position, Quaternion.identity);
+			Obstacle newObstacle = new Obstacle(obstacleObject.transform, shipControllerZPos);
+
+			spawnedObstacle.Add(newObstacle);
+			Debug.Log("Generated bonus");
+		}
 		else // should generate obstacle
 		{
 			int newObstacleIndex = PickNewObstacle();
@@ -125,6 +137,7 @@ public class TrackGenerationManager : BaseBehaviour
 			Obstacle newObstacle = new Obstacle(obstacleObject.transform, shipControllerZPos);
 
 			spawnedObstacle.Add(newObstacle);
+			Debug.Log("Generated obstacle");
 		}
 
 		levelObstaclesCount++;
