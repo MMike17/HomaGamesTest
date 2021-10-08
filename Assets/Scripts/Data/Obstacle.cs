@@ -5,19 +5,20 @@ public class Obstacle
 {
 	Transform obstacle;
 	float limit;
-	bool isDone;
+	bool isDone, isEmpty;
 
-	public Obstacle(Transform obstacle, float limit)
+	public Obstacle(Transform obstacle, float limit, bool isEmpty)
 	{
 		this.obstacle = obstacle;
 		this.limit = limit;
+		this.isEmpty = isEmpty;
 
 		isDone = false;
 	}
 
 	public bool CheckGiveScore()
 	{
-		if(isDone)
+		if(isEmpty || isDone)
 			return false;
 
 		if(obstacle.position.z <= limit)

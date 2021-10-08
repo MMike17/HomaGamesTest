@@ -124,7 +124,7 @@ public class TrackGenerationManager : BaseBehaviour
 
 			// generate obstacle because it can't wait until the bonus is done
 			GameObject obstacleObject = Instantiate(emptyObstaclePrefab, obstacleSpawnPoint.position, Quaternion.identity);
-			Obstacle newObstacle = new Obstacle(obstacleObject.transform, shipControllerZPos);
+			Obstacle newObstacle = new Obstacle(obstacleObject.transform, shipControllerZPos, true);
 
 			spawnedObstacle.Add(newObstacle);
 			Debug.Log("Generated bonus");
@@ -134,7 +134,7 @@ public class TrackGenerationManager : BaseBehaviour
 			int newObstacleIndex = PickNewObstacle();
 
 			GameObject obstacleObject = Instantiate(obstacles[newObstacleIndex], obstacleSpawnPoint.position, Quaternion.identity);
-			Obstacle newObstacle = new Obstacle(obstacleObject.transform, shipControllerZPos);
+			Obstacle newObstacle = new Obstacle(obstacleObject.transform, shipControllerZPos, false);
 
 			spawnedObstacle.Add(newObstacle);
 			Debug.Log("Generated obstacle");
