@@ -10,6 +10,8 @@ x Bonus stay in place after completion (way too easy)
 - Obstacles spawn too far at the beginning
 x Bonus animations don't show
 - Bonus missalignment
-- Empty obstacles give points when they shouldn't
+x Empty obstacles give points when they shouldn't
 - There are no collisions with the player (why the hell ?)
-- Fail bonus anim repeats
+x Fail bonus anim repeats
+- Bonuses and obstacles are not spaced correctly
+- Level not changing
