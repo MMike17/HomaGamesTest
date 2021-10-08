@@ -16,24 +16,24 @@ public class ScoreManager : BaseBehaviour
 	float currentScoreMultiplier;
 	float currentPlayerScore;
 
-	string ClampNumberToDecimals(float number)
-	{
-		string result = number.ToString();
-
-		int decimalCount = result.Length - result.IndexOf('.') - 1;
-
-		// truncate decimals
-		if(decimalCount >= scoreDecimals)
-			result = result.Substring(0, result.IndexOf('.') + 1) + result.Substring(result.IndexOf('.') + 1, scoreDecimals);
-
-		return result;
-	}
-
 	public void Init()
 	{
 		ResetScore();
 
 		InitInternal();
+	}
+
+	string ClampNumberToDecimals(float number)
+	{
+		string result = number.ToString();
+
+		int decimalCount = result.IndexOf(',') != -1 ? result.Length - result.IndexOf(',') - 1 : 0;
+
+		// truncate decimals
+		if(decimalCount >= scoreDecimals)
+			result = result.Substring(0, result.IndexOf(',') + 1) + result.Substring(result.IndexOf(',') + 1, scoreDecimals);
+
+		return result;
 	}
 
 	void ResetScore()

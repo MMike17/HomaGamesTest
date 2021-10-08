@@ -7,6 +7,7 @@ x Ship can't move at beginning of game
 x Bonus don't show
 x Bonus are super slow
 x Bonus stay in place after completion (way too easy)
+x Bonus don't stay in place after completion (way too hard)
 - Obstacles spawn too far at the beginning
 x Bonus animations don't show
 - Bonus missalignment
@@ -16,6 +17,6 @@ x Fail bonus anim repeats
 - Bonuses and obstacles are not spaced correctly
 x Level not changing
 x Bonus fails too easely
-- VFX not showing up
+x VFX not showing up
 - score per obstacle is not correct above 100
 x level shadow color not changing
