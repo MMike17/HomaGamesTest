@@ -10,6 +10,7 @@ public class BonusGameUI : BaseBehaviour
 {
 	[Header("Settings")]
 	public float distanceActivation;
+	public float minDistanceThreshold;
 	public Color[] bonusColors;
 
 	[Header("Scene references")]
@@ -19,6 +20,7 @@ public class BonusGameUI : BaseBehaviour
 	public Button winButton;
 
 	Animator anim;
+	Action SetBonusLost;
 	float speed;
 	int lastBonusColor;
 	bool isPlaying;
@@ -29,8 +31,10 @@ public class BonusGameUI : BaseBehaviour
 			Debug.DrawLine(winButton.transform.position + winButton.transform.right * distanceActivation / 2, winButton.transform.position - winButton.transform.right * distanceActivation / 2, Color.red);
 	}
 
-	public void Init(Action SetBonusWon, Action SetBonusLost)
+	public void Init(Action SetBonusWon, Action setBonusLost)
 	{
+		SetBonusLost = setBonusLost;
+
 		anim = GetComponent<Animator>();
 		isPlaying = false;
 
@@ -68,6 +72,13 @@ public class BonusGameUI : BaseBehaviour
 		{
 			leftImage.transform.parent.position = Vector3.MoveTowards(leftImage.transform.parent.position, winButton.transform.position, speed * Time.deltaTime);
 			rightImage.transform.parent.position = Vector3.MoveTowards(rightImage.transform.parent.position, winButton.transform.position, speed * Time.deltaTime);
+
+			// player is too late
+			if(Vector3.Distance(leftImage.transform.parent.position, winButton.transform.position) <= minDistanceThreshold)
+			{
+				SetBonusLost();
+				anim.Play("Lose");
+			}
 		}
 	}
 
@@ -75,6 +86,9 @@ public class BonusGameUI : BaseBehaviour
 	{
 		if(!CheckInitialized())
 			return;
+
+		// This is so that bonus animations still happen
+		delay -= 0.5f;
 
 		isPlaying = true;
 		speed = Vector3.Distance(leftStartPoint.position, winButton.transform.position) / delay;
