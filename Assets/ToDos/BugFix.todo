@@ -8,15 +8,17 @@ x Bonus don't show
 x Bonus are super slow
 x Bonus stay in place after completion (way too easy)
 x Bonus don't stay in place after completion (way too hard)
-- Obstacles spawn too far at the beginning
 x Bonus animations don't show
-- Bonus missalignment
 x Empty obstacles give points when they shouldn't
-- There are no collisions with the player (why the hell ?)
 x Fail bonus anim repeats
-- Bonuses and obstacles are not spaced correctly
 x Level not changing
 x Bonus fails too easely
 x VFX not showing up
-- score per obstacle is not correct above 100
+x score per obstacle is not correct above 100
 x level shadow color not changing
+x Bonus missalignment
+- Obstacles spawn too far at the beginning
+- Bonuses and obstacles are not spaced correctly
+x There are no collisions with the player (why the hell ?)
+x Bug on end screen
+- Doesn't restart game

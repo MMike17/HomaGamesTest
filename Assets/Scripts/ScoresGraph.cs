@@ -36,6 +36,9 @@ public class ScoresGraph : BaseBehaviour
 
 	float ToPercent(float value)
 	{
+		if(value == 0 || minScore == 0 || maxScore == 0)
+			return 0.5f;
+
 		return (value - minScore) / (maxScore - minScore);
 	}
 
@@ -124,6 +127,7 @@ public class ScoresGraph : BaseBehaviour
 			lines[i].gameObject.SetActive(true);
 		}
 
-		StartCoroutine(AnimateLine(scores.Count - 2));
+		if(scores.Count > 1)
+			StartCoroutine(AnimateLine(scores.Count - 2));
 	}
 }
