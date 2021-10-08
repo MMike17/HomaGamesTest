@@ -8,7 +8,7 @@ public class TrackGenerationManager : BaseBehaviour
 	[Header("Settings")]
 	public int randomizationMemory;
 	public float minSpeed, maxSpeed, minFrequency, maxFrequency;
-	public int minSize, maxSize, obstaclesPerLevel;
+	public int obstaclesPerLevel;
 
 	[Header("Scene references")]
 	public GameObject[] obstacles;
@@ -23,7 +23,7 @@ public class TrackGenerationManager : BaseBehaviour
 	Func<float> GetBonusPercentile;
 	Action<float> GenerateBonus;
 	Action GiveScore, ChangeLevel;
-	float currentDifficulty, currentSize, sizeCount, shipControllerZPos;
+	float currentDifficulty, sizeCount, shipControllerZPos;
 	int levelObstaclesCount;
 	bool gamePaused;
 
@@ -85,21 +85,6 @@ public class TrackGenerationManager : BaseBehaviour
 		});
 	}
 
-	void ComputeCurrentSize()
-	{
-		float proportionalSize = Mathf.Lerp(minSize, maxSize, currentDifficulty);
-		sizeCount += proportionalSize - minSize;
-
-		// switch between two sizes depending on additive lerp frequence
-		if(sizeCount >= maxSize)
-		{
-			currentSize = maxSize;
-			sizeCount = sizeCount - maxSize + minSize;
-		}
-		else
-			currentSize = minSize;
-	}
-
 	int PickNewObstacle()
 	{
 		List<int> obstacleIndexes = new List<int>();
@@ -134,7 +119,6 @@ public class TrackGenerationManager : BaseBehaviour
 			GenerateBonus(currentFrequency);
 		else // should generate obstacle
 		{
-			ComputeCurrentSize();
 			int newObstacleIndex = PickNewObstacle();
 
 			GameObject obstacleObject = Instantiate(obstacles[newObstacleIndex], obstacleSpawnPoint.position, Quaternion.identity);
