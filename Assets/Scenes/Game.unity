@@ -1377,6 +1377,8 @@ MonoBehaviour:
   minX: -2
   maxX: 2
   lateralSpeed: 5
+  maxRotation: 30
+  rotationSpeed: 3
   smoothingCurve:
     serializedVersion: 2
     m_Curve:
@@ -1957,7 +1959,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-155222
+  m_Name: pb_Mesh-181904
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4003,7 +4005,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-155210
+  m_Name: pb_Mesh-181892
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10076,7 +10078,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-155186
+  m_Name: pb_Mesh-181868
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16228,7 +16230,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-155198
+  m_Name: pb_Mesh-181880
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

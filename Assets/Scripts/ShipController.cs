@@ -7,13 +7,13 @@ public class ShipController : BaseBehaviour
 {
 	[Header("Speed")]
 	public float minX;
-	public float maxX, lateralSpeed;
+	public float maxX, lateralSpeed, maxRotation, rotationSpeed;
 	public AnimationCurve smoothingCurve;
 
 	Collider shipCollider;
 	Animator anim;
 	Action ShowEndScreen;
-	float horizontalInput, halfRange;
+	float horizontalInput, halfRange, rotationAmount;
 	bool gamePaused, blockInput;
 
 	void OnDrawGizmos()
@@ -45,6 +45,7 @@ public class ShipController : BaseBehaviour
 			return;
 
 		ManageInput();
+		RotateShip();
 		Movement();
 	}
 
@@ -62,6 +63,13 @@ public class ShipController : BaseBehaviour
 
 		if(blockInput)
 			horizontalInput = 0;
+	}
+
+	void RotateShip()
+	{
+		rotationAmount = Mathf.MoveTowards(rotationAmount, -horizontalInput, rotationSpeed * Time.deltaTime);
+
+		transform.rotation = Quaternion.Euler(0, 0, rotationAmount * maxRotation);
 	}
 
 	void Movement()
