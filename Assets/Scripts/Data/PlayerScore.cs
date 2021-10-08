@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [Serializable]
 public class PlayerScore
 {
-	public List<float> scoresHistory { get; private set; }
+	public List<float> scoresHistory;
 	public float highscore;
 
 	public PlayerScore()
