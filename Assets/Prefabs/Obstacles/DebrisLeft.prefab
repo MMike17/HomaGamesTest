@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5077985043097512442}
   m_Layer: 0
   m_Name: Debris (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1374,7 +1374,7 @@ GameObject:
   - component: {fileID: 5077985043369561538}
   m_Layer: 0
   m_Name: Debris (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2733,7 +2733,7 @@ GameObject:
   - component: {fileID: 5077985044400140560}
   m_Layer: 0
   m_Name: Debris
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4089,7 +4089,7 @@ GameObject:
   - component: {fileID: 8253608678874601547}
   m_Layer: 0
   m_Name: DebrisLeft
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

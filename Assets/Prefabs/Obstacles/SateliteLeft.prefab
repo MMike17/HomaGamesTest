@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2778688738954042767}
   m_Layer: 0
   m_Name: Panels
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -986,7 +986,7 @@ GameObject:
   - component: {fileID: 2778688739027779471}
   m_Layer: 0
   m_Name: Satelite
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1023,7 +1023,7 @@ GameObject:
   - component: {fileID: 2778688739264194911}
   m_Layer: 0
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2512,7 +2512,7 @@ GameObject:
   - component: {fileID: 2778688740400603402}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7437,7 +7437,7 @@ GameObject:
   - component: {fileID: 2778688740588369340}
   m_Layer: 0
   m_Name: ParabolPivot
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7469,7 +7469,7 @@ GameObject:
   - component: {fileID: 6199280911370665644}
   m_Layer: 0
   m_Name: SateliteLeft
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

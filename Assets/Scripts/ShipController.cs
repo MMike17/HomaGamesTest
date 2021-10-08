@@ -90,9 +90,11 @@ public class ShipController : BaseBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
+		if(gamePaused)
+			return;
+
 		if(collision.collider.CompareTag("Obstacle"))
 		{
-			shipCollider.enabled = false;
 			anim.Play("Crash");
 
 			ShowEndScreen();
