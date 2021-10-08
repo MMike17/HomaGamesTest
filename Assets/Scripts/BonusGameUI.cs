@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static BonusManager;
@@ -9,6 +10,7 @@ public class BonusGameUI : BaseBehaviour
 {
 	[Header("Settings")]
 	public float distanceActivation;
+	public Color[] bonusColors;
 
 	[Header("Scene references")]
 	public Transform leftStartPoint;
@@ -18,6 +20,7 @@ public class BonusGameUI : BaseBehaviour
 
 	Animator anim;
 	float speed;
+	int lastBonusColor;
 	bool isPlaying;
 
 	void OnDrawGizmos()
@@ -35,6 +38,8 @@ public class BonusGameUI : BaseBehaviour
 		{
 			if(!isPlaying)
 				return;
+
+			isPlaying = false;
 
 			if(Vector3.Distance(leftImage.transform.parent.position, winButton.transform.position) <= distanceActivation)
 			{
@@ -72,10 +77,26 @@ public class BonusGameUI : BaseBehaviour
 		isPlaying = true;
 		speed = Vector3.Distance(leftStartPoint.position, winButton.transform.position) / delay;
 
+		// picks bonus color
+		List<int> colorIndexes = new List<int>();
+
+		for (int i = 0; i < bonusColors.Length; i++)
+			colorIndexes.Add(i);
+
+		colorIndexes.Remove(lastBonusColor);
+
+		lastBonusColor = UnityEngine.Random.Range(0, colorIndexes.Count);
+		Color selectedColor = bonusColors[lastBonusColor];
+
+		// configures UI
 		leftImage.sprite = bonus.leftPart;
+		leftImage.color = selectedColor;
 		leftImage.transform.parent.position = leftStartPoint.position;
 
 		rightImage.sprite = bonus.rightPart;
+		rightImage.color = selectedColor;
 		rightImage.transform.parent.position = rightStartPoint.position;
+
+		anim.Play("Idle");
 	}
 }
