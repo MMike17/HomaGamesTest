@@ -5,6 +5,9 @@ x Local data load has null object
 x Can't start game from main menu
 x Ship can't move at beginning of game
 x Bonus don't show
-- Bonus are super slow
+x Bonus are super slow
+- Bonus stay in place after completion (way too easy)
 - Obstacles spawn too far at the beginning
-- Bonus animations don't show
+x Bonus animations don't show
+- Bonus missalignment
+- Empty obstacles give points when they shouldn't
