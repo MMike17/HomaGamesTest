@@ -115,6 +115,8 @@ public class GameManager : MonoBehaviour
 			maxScoreHistory,
 			() =>
 			{
+				endScreenManager.HidePanel();
+				scoreManager.StartGame();
 				trackGenerationManager.StartGame();
 				shipController.StartShip();
 			}

@@ -17,8 +17,11 @@ x VFX not showing up
 x score per obstacle is not correct above 100
 x level shadow color not changing
 x Bonus missalignment
-- Obstacles spawn too far at the beginning
-- Bonuses and obstacles are not spaced correctly
 x There are no collisions with the player (why the hell ?)
 x Bug on end screen
-- Doesn't restart game
+x Doesn't restart game
+- Obstacles spawn too far at the beginning
+- Bonuses and obstacles are not spaced correctly
+- Score display doesn't start where it should
+- Score display line bugs
+- VFX bug when we restart game

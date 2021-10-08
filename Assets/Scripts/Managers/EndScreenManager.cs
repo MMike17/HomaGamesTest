@@ -39,4 +39,9 @@ public class EndScreenManager : BaseBehaviour
 
 		scoresGraph.DisplayData(scores, lastHighScore);
 	}
+
+	public void HidePanel()
+	{
+		canvas.SetActive(false);
+	}
 }

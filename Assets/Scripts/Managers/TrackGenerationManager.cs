@@ -7,16 +7,15 @@ public class TrackGenerationManager : BaseBehaviour
 {
 	[Header("Settings")]
 	public int randomizationMemory;
-	public float minSpeed, maxSpeed, minFrequency, maxFrequency;
+	public float speed, minFrequency, maxFrequency;
 	public int obstaclesPerLevel;
 
 	[Header("Scene references")]
 	public GameObject[] obstacles;
 	public GameObject emptyObstaclePrefab;
-	public Transform obstacleSpawnPoint, obstacleDestroyPoint;
+	public Transform startTempObstacleSpawnPoint, obstacleSpawnPoint, obstacleDestroyPoint;
 
-	float currentSpeed => Mathf.Lerp(minSpeed, maxSpeed, currentDifficulty);
-	float currentFrequency => Mathf.Lerp(minFrequency, maxFrequency, currentDifficulty);
+	float currentFrequency => Mathf.Lerp(maxFrequency, minFrequency, currentDifficulty);
 	Transform lastSpawnedObstacle => spawnedObstacle[spawnedObstacle.Count - 1].GetTransform();
 
 	List<Obstacle> spawnedObstacle;
@@ -26,7 +25,7 @@ public class TrackGenerationManager : BaseBehaviour
 	Action GiveScore, ChangeLevel;
 	float currentDifficulty, sizeCount, shipControllerZPos;
 	int levelObstaclesCount;
-	bool gamePaused;
+	bool gamePaused, isNextAnObstacle, inIntroduction;
 
 	public void Init(float shipControllerZPos, Action giveScore, Action changeLevel, Action<float> generateBonus, Func<float> getBonusPercentile)
 	{
@@ -41,7 +40,10 @@ public class TrackGenerationManager : BaseBehaviour
 		lastObstacles = new List<int>();
 
 		gamePaused = true;
+		inIntroduction = true;
 		levelObstaclesCount = 0;
+
+		isNextAnObstacle = PickNextObstacleOrBonus();
 
 		InitInternal();
 	}
@@ -54,7 +56,7 @@ public class TrackGenerationManager : BaseBehaviour
 		// detect when we need to spawn obstacles
 		if(spawnedObstacle.Count > 0)
 		{
-			float lapsedTime = Vector3.Distance(obstacleSpawnPoint.position, lastSpawnedObstacle.transform.position) / currentSpeed;
+			float lapsedTime = Vector3.Distance(obstacleSpawnPoint.position, lastSpawnedObstacle.transform.position) / speed;
 
 			if(lapsedTime >= currentFrequency)
 				GenerateNextObstacle();
@@ -75,7 +77,7 @@ public class TrackGenerationManager : BaseBehaviour
 			if(item.CheckGiveScore())
 				GiveScore();
 
-			item.GetTransform().Translate(0, 0, -currentSpeed * Time.deltaTime);
+			item.GetTransform().Translate(0, 0, -speed * Time.deltaTime);
 		});
 
 		// clean list
@@ -106,6 +108,11 @@ public class TrackGenerationManager : BaseBehaviour
 		return newObstacle;
 	}
 
+	bool PickNextObstacleOrBonus()
+	{
+		return UnityEngine.Random.value >= GetBonusPercentile();
+	}
+
 	void GenerateNextObstacle()
 	{
 		// change level
@@ -113,23 +120,13 @@ public class TrackGenerationManager : BaseBehaviour
 		{
 			ChangeLevel();
 			levelObstaclesCount = 0;
+			inIntroduction = false;
 
 			Debug.Log("Changed level");
 		}
 
-		// should generate bonus
-		if(UnityEngine.Random.value >= GetBonusPercentile())
-		{
-			GenerateBonus(currentFrequency);
-
-			// generate obstacle because it can't wait until the bonus is done
-			GameObject obstacleObject = Instantiate(emptyObstaclePrefab, obstacleSpawnPoint.position, Quaternion.identity);
-			Obstacle newObstacle = new Obstacle(obstacleObject.transform, shipControllerZPos, true);
-
-			spawnedObstacle.Add(newObstacle);
-			Debug.Log("Generated bonus");
-		}
-		else // should generate obstacle
+		// generates obstacle
+		if(isNextAnObstacle)
 		{
 			int newObstacleIndex = PickNewObstacle();
 
@@ -138,6 +135,25 @@ public class TrackGenerationManager : BaseBehaviour
 
 			spawnedObstacle.Add(newObstacle);
 			Debug.Log("Generated obstacle");
+		}
+
+		isNextAnObstacle = PickNextObstacleOrBonus();
+
+		// starts next bonus generation
+		if(!isNextAnObstacle)
+		{
+			DelayedActionsManager.SceduleAction(() =>
+				{
+					GenerateBonus(currentFrequency);
+
+					// generate obstacle because it can't wait until the bonus is done
+					GameObject obstacleObject = Instantiate(emptyObstaclePrefab, obstacleSpawnPoint.position, Quaternion.identity);
+					Obstacle newObstacle = new Obstacle(obstacleObject.transform, shipControllerZPos, true);
+
+					spawnedObstacle.Add(newObstacle);
+					Debug.Log("Generated bonus");
+				},
+				currentFrequency / 2);
 		}
 
 		levelObstaclesCount++;
@@ -157,6 +173,16 @@ public class TrackGenerationManager : BaseBehaviour
 			return;
 
 		// destroy all obstacles
+		foreach (Obstacle obstacle in spawnedObstacle)
+			Destroy(obstacle.GetTransform().gameObject);
+
+		spawnedObstacle.Clear();
+
+		// reset game settings
+		gamePaused = true;
+		inIntroduction = true;
+		levelObstaclesCount = 0;
+		isNextAnObstacle = PickNextObstacleOrBonus();
 
 		gamePaused = false;
 	}
