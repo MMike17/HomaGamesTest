@@ -228,7 +228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &59423378
 Transform:
   m_ObjectHideFlags: 0
@@ -241,7 +241,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 71}
   m_Children:
   - {fileID: 1547666738}
-  - {fileID: 69947185}
   - {fileID: 179329082}
   m_Father: {fileID: 2002013590}
   m_RootOrder: 3
@@ -269,13 +268,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69947184}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 71}
   m_Children:
   - {fileID: 535968943}
-  m_Father: {fileID: 59423378}
-  m_RootOrder: 1
+  m_Father: {fileID: 375768612}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &99808107
 GameObject:
@@ -854,7 +853,7 @@ Transform:
   m_Children:
   - {fileID: 1126785893}
   m_Father: {fileID: 59423378}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &196047357
 GameObject:
@@ -1533,6 +1532,7 @@ Transform:
   m_Children:
   - {fileID: 1101437566}
   - {fileID: 1813783708}
+  - {fileID: 69947185}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1704,19 +1704,19 @@ MonoBehaviour:
     maxDifficulty: 0.5
     bonusPercent: 0.4
     environmentColor: {r: 0, g: 0.023268795, b: 0.1, a: 1}
-    lightColor: {r: 0.8, g: 0.8462745, b: 1, a: 1}
+    lightColor: {r: 0.6, g: 0.69411755, b: 1, a: 1}
     scorePerObstacle: 10
   - minDifficulty: 0.3
     maxDifficulty: 0.8
     bonusPercent: 0.2
     environmentColor: {r: 0.12438191, g: 0, b: 0.15, a: 1}
-    lightColor: {r: 0.9684211, g: 0.8, b: 1, a: 1}
+    lightColor: {r: 0.9372549, g: 0.6, b: 1, a: 1}
     scorePerObstacle: 12
   - minDifficulty: 0.5
     maxDifficulty: 1
     bonusPercent: 0.1
     environmentColor: {r: 0.14901961, g: 0, b: 0.012418325, a: 1}
-    lightColor: {r: 1, g: 0.8, b: 0.8157895, a: 1}
+    lightColor: {r: 1, g: 0.6, b: 0.63137245, a: 1}
     scorePerObstacle: 15
   mainCamera: {fileID: 963194227}
   mainLight: {fileID: 705507994}
@@ -1992,7 +1992,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &586520598
 GameObject:
@@ -10131,7 +10131,7 @@ RectTransform:
   m_Children:
   - {fileID: 304176929}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

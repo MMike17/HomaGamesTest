@@ -64,6 +64,16 @@ public class VFXManager : BaseBehaviour
 		StartCoroutine(StartAnimation(passedObstacleSettings));
 	}
 
+	public void ResetEffects()
+	{
+		if(!CheckInitialized())
+			return;
+
+		aberration.intensity.value = 0;
+		distortion.intensity.value = 0;
+		bloom.intensity.value = 0;
+	}
+
 	IEnumerator StartAnimation(PostProcessAnimSettings settings)
 	{
 		timer = 0;

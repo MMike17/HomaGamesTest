@@ -23,5 +23,5 @@ x Obstacles spawn too far at the beginning
 x Bonuses and obstacles are not spaced correctly
 x Score display doesn't start where it should
 x Score display line bugs
-- VFX bug when we restart game
+x VFX bug for past highscore
 - Bonus don't stay in place after completion (way too hard)

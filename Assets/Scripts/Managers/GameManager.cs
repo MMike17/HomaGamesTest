@@ -68,15 +68,17 @@ public class GameManager : MonoBehaviour
 			shipController.transform.position.z,
 			() =>
 			{
-				if(!newHigh)
-					vfxManager.PassedObstacleAnim();
-
 				scoreManager.AddScore(levelManager.GetScorePerObstacle());
 
-				if(scoreManager.GetCurrentScore() > playerScore.highscore)
+				if(!newHigh)
 				{
-					vfxManager.NewHighAnim();
-					newHigh = true;
+					vfxManager.PassedObstacleAnim();
+
+					if(playerScore.highscore != 0 && scoreManager.GetCurrentScore() > playerScore.highscore)
+					{
+						vfxManager.NewHighAnim();
+						newHigh = true;
+					}
 				}
 			},
 			() => levelManager.BlendToNewLevel(),
@@ -92,7 +94,9 @@ public class GameManager : MonoBehaviour
 			{
 				if(bonusState)
 				{
-					vfxManager.BonusAnim();
+					if(!newHigh)
+						vfxManager.BonusAnim();
+
 					scoreManager.AddMultiplier();
 					shipController.GetBonus();
 				}
@@ -116,9 +120,12 @@ public class GameManager : MonoBehaviour
 			() =>
 			{
 				endScreenManager.HidePanel();
+
 				scoreManager.StartGame();
 				trackGenerationManager.StartGame();
 				shipController.StartShip();
+
+				newHigh = false;
 			}
 		);
 	}
@@ -135,6 +142,7 @@ public class GameManager : MonoBehaviour
 			DataManager.SaveObject(playerScore, SAVE_FILE_NAME);
 
 			endScreenManager.DisplayData(playerScore.scoresHistory, lastHighScore);
+			vfxManager.ResetEffects();
 		});
 	}
 }
