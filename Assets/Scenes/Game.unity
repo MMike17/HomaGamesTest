@@ -328,6 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataManagerLogLevel: 1
+  isBuild: 0
   maxScoreHistory: 10
   vfxManager: {fileID: 1360939401}
   levelManager: {fileID: 443765910}
@@ -1498,19 +1499,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blendDuration: 5
   levelSettings:
-  - minDifficulty: 0.2
-    maxDifficulty: 0.6
+  - minDifficulty: 0
+    maxDifficulty: 0.5
     bonusPercent: 0.2
     environmentColor: {r: 0, g: 0.023268795, b: 0.1, a: 1}
     lightColor: {r: 0.8, g: 0.8462745, b: 1, a: 1}
     scorePerObstacle: 10
-  - minDifficulty: 0.4
+  - minDifficulty: 0.3
     maxDifficulty: 0.8
     bonusPercent: 0.05
     environmentColor: {r: 0.12438191, g: 0, b: 0.15, a: 1}
     lightColor: {r: 0.9684211, g: 0.8, b: 1, a: 1}
     scorePerObstacle: 12
-  - minDifficulty: 0.6
+  - minDifficulty: 0.5
     maxDifficulty: 1
     bonusPercent: 0.1
     environmentColor: {r: 0.14901961, g: 0, b: 0.012418325, a: 1}
@@ -11163,10 +11164,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd6b490f4d6b3744bebe4d688a78f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomizationMemory: 2
-  speed: 20
-  minFrequency: 5
-  maxFrequency: 15
+  randomizationMemory: 3
+  speed: 30
+  minFrequency: 0.1
+  maxFrequency: 4
   obstaclesPerLevel: 10
   obstacles:
   - {fileID: 1593824515701269868, guid: 0026193126a67ef489a28bb1c7634a89, type: 3}
@@ -11178,7 +11179,6 @@ MonoBehaviour:
   - {fileID: 6199280911370665642, guid: 0e998e2e4d288c24ca6080ed89dc194d, type: 3}
   - {fileID: 1695955204578864229, guid: d1c0f338df26b024691161af4ef6d0cd, type: 3}
   emptyObstaclePrefab: {fileID: 350902131222184660, guid: 1581626debc685749877d40c39285b2c, type: 3}
-  startTempObstacleSpawnPoint: {fileID: 0}
   obstacleSpawnPoint: {fileID: 660003170}
   obstacleDestroyPoint: {fileID: 145783619}
 --- !u!1 &2081188147
