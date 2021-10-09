@@ -1,33 +1,63 @@
+using System;
 using UnityEngine;
 
 /// <summary>Class representing a spawned obstacle</summary>
 public class Obstacle
 {
-	Transform obstacle;
-	float limit;
-	bool isDone, isEmpty;
+	public Func<bool> CheckMethod { get; private set; }
+	public bool isEmpty => _isEmpty;
 
-	public Obstacle(Transform obstacle, float limit, bool isEmpty)
+	Transform obstacle;
+	float playerZ, checkDistance;
+	bool isDone, _isEmpty;
+
+	/// <summary>Creates new real obstacle</summary>
+	public Obstacle(Transform obstacle, float playerZ)
 	{
 		this.obstacle = obstacle;
-		this.limit = limit;
-		this.isEmpty = isEmpty;
+		this.playerZ = playerZ;
+
+		CheckMethod = () =>
+		{
+			if(_isEmpty || isDone)
+				return false;
+
+			if(obstacle.position.z <= playerZ)
+			{
+				isDone = true;
+				return true;
+			}
+
+			return false;
+		};
 
 		isDone = false;
+		_isEmpty = false;
 	}
 
-	public bool CheckGiveScore()
+	/// <summary>Creates new empty obstacle (for bonus)</summary>
+	public Obstacle(Transform obstacle, float playerZ, float checkDistance)
 	{
-		if(isEmpty || isDone)
-			return false;
+		this.obstacle = obstacle;
+		this.playerZ = playerZ;
+		this.checkDistance = checkDistance;
 
-		if(obstacle.position.z <= limit)
+		CheckMethod = () =>
 		{
-			isDone = true;
-			return true;
-		}
+			if(!_isEmpty || isDone)
+				return false;
 
-		return false;
+			if(obstacle.position.z <= playerZ + checkDistance)
+			{
+				isDone = true;
+				return true;
+			}
+
+			return false;
+		};
+
+		isDone = false;
+		_isEmpty = true;
 	}
 
 	public Transform GetTransform()

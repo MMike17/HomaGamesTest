@@ -7,7 +7,6 @@ x Ship can't move at beginning of game
 x Bonus don't show
 x Bonus are super slow
 x Bonus stay in place after completion (way too easy)
-x Bonus don't stay in place after completion (way too hard)
 x Bonus animations don't show
 x Empty obstacles give points when they shouldn't
 x Fail bonus anim repeats
@@ -20,8 +19,9 @@ x Bonus missalignment
 x There are no collisions with the player (why the hell ?)
 x Bug on end screen
 x Doesn't restart game
-- Obstacles spawn too far at the beginning
-- Bonuses and obstacles are not spaced correctly
+x Obstacles spawn too far at the beginning
+x Bonuses and obstacles are not spaced correctly
 - Score display doesn't start where it should
 - Score display line bugs
 - VFX bug when we restart game
+- Bonus don't stay in place after completion (way too hard)

@@ -94,8 +94,8 @@ public class BonusGameUI : BaseBehaviour
 			return;
 
 		// This is so that bonus animations still happen
+		// delay -= 0.5f;
 		delay /= 2;
-		// -= 0.5f;
 
 		isPlaying = true;
 		speed = Vector3.Distance(leftStartPoint.position, winButton.transform.position) / delay;
