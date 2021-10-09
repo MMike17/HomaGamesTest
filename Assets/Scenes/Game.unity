@@ -11622,20 +11622,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd6b490f4d6b3744bebe4d688a78f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomizationMemory: 3
+  randomizationMemory: 2
   speed: 30
-  minFrequency: 0.1
-  maxFrequency: 4
-  minOpportunityWindow: 0.05
-  maxOpportunityWindow: 0.2
-  obstaclesPerLevel: 5
-  obstacles:
-  - {fileID: 1593824515701269868, guid: 0026193126a67ef489a28bb1c7634a89, type: 3}
+  minFrequency: 0.5
+  maxFrequency: 5
+  minOpportunityWindow: 0.1
+  maxOpportunityWindow: 0.3
+  obstaclesPerLevel: 10
+  sideObstacles:
   - {fileID: 2378801010034978378, guid: 08aabcb718c32d242bc812830ef1272b, type: 3}
   - {fileID: 5518640010852816275, guid: fa5d7906311d00345bc937946901648c, type: 3}
-  - {fileID: 8949440465951814344, guid: 1c78107efb7ee104e85832c504ab77a0, type: 3}
   - {fileID: 8253608678874601549, guid: 6a732ec7515bc6f48b4da205238cd2aa, type: 3}
   - {fileID: 6296724218841164124, guid: 99421156701268c48933ae62688b5178, type: 3}
+  centerObstacles:
+  - {fileID: 1593824515701269868, guid: 0026193126a67ef489a28bb1c7634a89, type: 3}
+  - {fileID: 8949440465951814344, guid: 1c78107efb7ee104e85832c504ab77a0, type: 3}
   - {fileID: 6199280911370665642, guid: 0e998e2e4d288c24ca6080ed89dc194d, type: 3}
   - {fileID: 1695955204578864229, guid: d1c0f338df26b024691161af4ef6d0cd, type: 3}
   emptyObstaclePrefab: {fileID: 350902131222184660, guid: 1581626debc685749877d40c39285b2c, type: 3}
