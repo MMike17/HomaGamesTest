@@ -30,7 +30,9 @@ public class LevelManager : BaseBehaviour
 			levelSettings[currentLevel].environmentColor,
 			levelSettings[currentLevel].lightColor,
 			levelSettings[currentLevel].bonusPercent,
-			levelSettings[currentLevel].scorePerObstacle
+			levelSettings[currentLevel].scorePerObstacle,
+			levelSettings[currentLevel].minDifficulty,
+			levelSettings[currentLevel].maxDifficulty
 		);
 
 		InitInternal();
@@ -54,7 +56,9 @@ public class LevelManager : BaseBehaviour
 				environmentColor,
 				Color.Lerp(currentSettings.lightColor, nextSettings.lightColor, percentile),
 				Mathf.Lerp(currentSettings.bonusPercent, nextSettings.bonusPercent, percentile),
-				Mathf.RoundToInt(Mathf.Lerp(currentSettings.scorePerObstacle, nextSettings.scorePerObstacle, percentile))
+				Mathf.RoundToInt(Mathf.Lerp(currentSettings.scorePerObstacle, nextSettings.scorePerObstacle, percentile)),
+				Mathf.Lerp(currentSettings.minDifficulty, nextSettings.minDifficulty, percentile),
+				Mathf.Lerp(currentSettings.maxDifficulty, nextSettings.maxDifficulty, percentile)
 			);
 
 			yield return null;
@@ -64,13 +68,15 @@ public class LevelManager : BaseBehaviour
 			nextSettings.environmentColor,
 			nextSettings.lightColor,
 			nextSettings.bonusPercent,
-			nextSettings.scorePerObstacle
+			nextSettings.scorePerObstacle,
+			nextSettings.minDifficulty,
+			nextSettings.maxDifficulty
 		);
 
 		currentLevel = nextLevel;
 	}
 
-	void ApplySettings(Color environmentColor, Color lightColor, float bonusPercent, int scorePerObstacle)
+	void ApplySettings(Color environmentColor, Color lightColor, float bonusPercent, int scorePerObstacle, float minDifficulty, float maxDifficulty)
 	{
 		mainCamera.backgroundColor = environmentColor;
 		RenderSettings.fogColor = environmentColor;
@@ -78,6 +84,8 @@ public class LevelManager : BaseBehaviour
 
 		currentBonusPercent = bonusPercent;
 		currentScorePerObstacle = scorePerObstacle;
+
+		SetMinMaxDifficulty(minDifficulty, maxDifficulty);
 	}
 
 	public void BlendToNewLevel()

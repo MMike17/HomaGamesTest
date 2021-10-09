@@ -61,9 +61,6 @@ public class GameManager : MonoBehaviour
 	void InitializeManagers()
 	{
 		vfxManager.Init();
-		levelManager.Init(
-			(min, max) => trackGenerationManager.SetDifficulty(Random.Range(min, max))
-		);
 		trackGenerationManager.Init(
 			shipController.transform.position.z,
 			() =>
@@ -89,6 +86,9 @@ public class GameManager : MonoBehaviour
 				shipController.BlockInput();
 			},
 			() => { return levelManager.GetBonusPercent(); }
+		);
+		levelManager.Init(
+			(min, max) => trackGenerationManager.SetDifficulty(Random.Range(min, max))
 		);
 		bonusManager.Init(
 			bonusState =>

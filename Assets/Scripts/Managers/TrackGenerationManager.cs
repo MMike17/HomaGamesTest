@@ -11,7 +11,8 @@ public class TrackGenerationManager : BaseBehaviour
 	public int obstaclesPerLevel;
 
 	[Header("Scene references")]
-	public GameObject[] obstacles;
+	public GameObject[] sideObstacles;
+	public GameObject[] centerObstacles;
 	public GameObject emptyObstaclePrefab;
 	public Transform obstacleSpawnPoint, obstacleDestroyPoint;
 
@@ -20,7 +21,7 @@ public class TrackGenerationManager : BaseBehaviour
 	Transform lastSpawnedObstacle => spawnedObstacle[spawnedObstacle.Count - 1].GetTransform();
 
 	List<Obstacle> spawnedObstacle;
-	List<int> lastObstacles;
+	List<int> lastSideObstacles, lastCenterObstacles;
 	Func<float> GetBonusPercentile;
 	Action<float, float> GenerateBonus;
 	Action GiveScore, ChangeLevel;
@@ -38,7 +39,8 @@ public class TrackGenerationManager : BaseBehaviour
 		GetBonusPercentile = getBonusPercentile;
 
 		spawnedObstacle = new List<Obstacle>();
-		lastObstacles = new List<int>();
+		lastSideObstacles = new List<int>();
+		lastCenterObstacles = new List<int>();
 
 		gamePaused = true;
 		levelObstaclesCount = 0;
@@ -94,24 +96,33 @@ public class TrackGenerationManager : BaseBehaviour
 		});
 	}
 
-	int PickNewObstacle()
+	GameObject SpawnNewObstacle()
 	{
-		List<int> obstacleIndexes = new List<int>();
+		bool isCenter = UnityEngine.Random.value <= currentDifficulty;
 
-		for (int i = 0; i < obstacles.Length; i++)
+		List<int> obstacleIndexes = new List<int>();
+		GameObject[] selectedObstacles = isCenter ? centerObstacles : sideObstacles;
+
+		for (int i = 0; i < selectedObstacles.Length; i++)
 			obstacleIndexes.Add(i);
 
 		// only keep new indexes
-		lastObstacles.ForEach(item => obstacleIndexes.Remove(item));
+		List<int> selectedIndexesHistory = isCenter ? lastCenterObstacles : lastSideObstacles;
+		selectedIndexesHistory.ForEach(item => obstacleIndexes.Remove(item));
 
-		int newObstacle = UnityEngine.Random.Range(0, obstacleIndexes.Count - 1);
-		obstacleIndexes.Add(newObstacle);
+		int newObstacle = obstacleIndexes[UnityEngine.Random.Range(0, obstacleIndexes.Count)];
+		selectedIndexesHistory.Add(newObstacle);
 
 		// keep memory size consistant
-		if(lastObstacles.Count > randomizationMemory)
-			lastObstacles.RemoveAt(0);
+		if(selectedIndexesHistory.Count > randomizationMemory)
+			selectedIndexesHistory.RemoveAt(0);
 
-		return newObstacle;
+		if(isCenter)
+			lastCenterObstacles = selectedIndexesHistory;
+		else
+			lastSideObstacles = selectedIndexesHistory;
+
+		return Instantiate(selectedObstacles[newObstacle], obstacleSpawnPoint.position, Quaternion.identity);
 	}
 
 	bool PickNextObstacleOrBonus()
@@ -131,9 +142,7 @@ public class TrackGenerationManager : BaseBehaviour
 		// generates obstacle
 		if(PickNextObstacleOrBonus())
 		{
-			int newObstacleIndex = PickNewObstacle();
-
-			GameObject obstacleObject = Instantiate(obstacles[newObstacleIndex], obstacleSpawnPoint.position, Quaternion.identity);
+			GameObject obstacleObject = SpawnNewObstacle();
 			Obstacle newObstacle = new Obstacle(obstacleObject.transform, shipControllerZPos);
 
 			spawnedObstacle.Add(newObstacle);
