@@ -116,12 +116,12 @@ public class ScoresGraph : BaseBehaviour
 		}
 
 		// position lines
-		for (int i = 1; i < scores.Count - 1; i++)
+		for (int i = 0; i < scores.Count - 2; i++)
 		{
-			lines[i].transform.position = Vector3.Lerp(points[i - 1].position, points[i].position, 0.5f);
-			lines[i].SetSizeWithCurrentAnchors(Axis.Horizontal, Vector3.Distance(points[i].position, points[i - 1].position));
+			lines[i].transform.position = Vector3.Lerp(points[i].position, points[i + 1].position, 0.5f);
+			lines[i].SetSizeWithCurrentAnchors(Axis.Horizontal, Vector3.Distance(points[i].position, points[i + 1].position));
 
-			float angle = Vector3.SignedAngle(Vector3.right, points[i].position - points[i - 1].position, Vector3.forward);
+			float angle = Vector3.SignedAngle(Vector3.right, points[i + 1].position - points[i].position, Vector3.forward);
 			lines[i].transform.rotation = Quaternion.Euler(0, 0, angle);
 
 			lines[i].gameObject.SetActive(true);
