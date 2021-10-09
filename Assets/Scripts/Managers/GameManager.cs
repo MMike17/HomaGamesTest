@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 				{
 					vfxManager.PassedObstacleAnim();
 
-					if(playerScore.highscore != 0 && scoreManager.GetCurrentScore() > playerScore.highscore)
+					if((playerScore.highscore == 0 && scoreManager.GetCurrentScore() > 100) || (playerScore.highscore != 0 && scoreManager.GetCurrentScore() > playerScore.highscore))
 					{
 						vfxManager.NewHighAnim();
 						newHigh = true;

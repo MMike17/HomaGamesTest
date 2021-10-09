@@ -71,7 +71,7 @@ public class ScoreManager : BaseBehaviour
 		currentScoreMultiplier += mulitplierPerBonus;
 
 		multiplierDisplay.gameObject.SetActive(true);
-		multiplierDisplay.text = "x" + currentScoreMultiplier;
+		multiplierDisplay.text = "x" + ClampNumberToDecimals(currentScoreMultiplier);
 	}
 
 	public void CancelMultiplier()
@@ -82,7 +82,7 @@ public class ScoreManager : BaseBehaviour
 		currentScoreMultiplier = 1;
 
 		multiplierDisplay.gameObject.SetActive(false);
-		multiplierDisplay.text = "x" + currentScoreMultiplier;
+		multiplierDisplay.text = "x" + ClampNumberToDecimals(currentScoreMultiplier);
 	}
 
 	public float GetCurrentScore()

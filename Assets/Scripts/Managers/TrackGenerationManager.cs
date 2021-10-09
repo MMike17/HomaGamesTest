@@ -97,7 +97,7 @@ public class TrackGenerationManager : BaseBehaviour
 
 	GameObject SpawnNewObstacle()
 	{
-		bool isCenter = UnityEngine.Random.value + 0.2f <= currentDifficulty;
+		bool isCenter = UnityEngine.Random.value + 0.1f <= currentDifficulty;
 
 		List<int> obstacleIndexes = new List<int>();
 		GameObject[] selectedObstacles = isCenter ? centerObstacles : sideObstacles;
