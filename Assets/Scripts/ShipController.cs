@@ -56,11 +56,7 @@ public class ShipController : BaseBehaviour
 			if(Input.touchCount == 0)
 				horizontalInput = 0;
 			else
-<<<<<<< HEAD
 				horizontalInput = Input.GetTouch(0).position.x >= Screen.width / 2 ? 1 : -1;
-=======
-				horizontalInput = Input.GetTouch(0).position.x >= Screen.width ? 1 : -1;
->>>>>>> 52029fe9af1c10c0a798ff5e20ccc71ca0849130
 		}
 		else
 			horizontalInput = Input.GetAxis("Horizontal");
