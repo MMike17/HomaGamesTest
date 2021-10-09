@@ -82,9 +82,9 @@ public class GameManager : MonoBehaviour
 				}
 			},
 			() => levelManager.BlendToNewLevel(),
-			delay =>
+			(duration, opportunityWindowSize) =>
 			{
-				bonusManager.SpawnBonus(delay);
+				bonusManager.SpawnBonus(duration, opportunityWindowSize);
 				shipController.BlockInput();
 			},
 			() => { return levelManager.GetBonusPercent(); }

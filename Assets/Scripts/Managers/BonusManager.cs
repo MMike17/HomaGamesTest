@@ -46,13 +46,13 @@ public class BonusManager : BaseBehaviour
 		return newBonus;
 	}
 
-	public void SpawnBonus(float delay)
+	public void SpawnBonus(float duration, float opportunityWindowSize)
 	{
 		if(!CheckInitialized())
 			return;
 
 		int nextBonusIndex = GetNextBonusIndex();
-		bonusGameUI.StartBonus(bonuses[nextBonusIndex], delay);
+		bonusGameUI.StartBonus(bonuses[nextBonusIndex], duration, opportunityWindowSize);
 	}
 
 	[Serializable]

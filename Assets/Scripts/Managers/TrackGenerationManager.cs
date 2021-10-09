@@ -7,7 +7,7 @@ public class TrackGenerationManager : BaseBehaviour
 {
 	[Header("Settings")]
 	public int randomizationMemory;
-	public float speed, minFrequency, maxFrequency;
+	public float speed, minFrequency, maxFrequency, minOpportunityWindow, maxOpportunityWindow;
 	public int obstaclesPerLevel;
 
 	[Header("Scene references")]
@@ -16,18 +16,19 @@ public class TrackGenerationManager : BaseBehaviour
 	public Transform obstacleSpawnPoint, obstacleDestroyPoint;
 
 	float currentFrequency => Mathf.Lerp(maxFrequency, minFrequency, currentDifficulty);
+	float currentOpportunityWindow => Mathf.Lerp(maxOpportunityWindow, minOpportunityWindow, currentDifficulty);
 	Transform lastSpawnedObstacle => spawnedObstacle[spawnedObstacle.Count - 1].GetTransform();
 
 	List<Obstacle> spawnedObstacle;
 	List<int> lastObstacles;
 	Func<float> GetBonusPercentile;
-	Action<float> GenerateBonus;
+	Action<float, float> GenerateBonus;
 	Action GiveScore, ChangeLevel;
 	float currentDifficulty, sizeCount, shipControllerZPos;
 	int levelObstaclesCount;
 	bool gamePaused;
 
-	public void Init(float shipControllerZPos, Action giveScore, Action changeLevel, Action<float> generateBonus, Func<float> getBonusPercentile)
+	public void Init(float shipControllerZPos, Action giveScore, Action changeLevel, Action<float, float> generateBonus, Func<float> getBonusPercentile)
 	{
 		this.shipControllerZPos = shipControllerZPos;
 
@@ -74,7 +75,7 @@ public class TrackGenerationManager : BaseBehaviour
 			if(item.isEmpty)
 			{
 				if(item.CheckMethod())
-					GenerateBonus(currentFrequency);
+					GenerateBonus(currentFrequency, currentOpportunityWindow);
 			}
 			else // is obstacle
 			{

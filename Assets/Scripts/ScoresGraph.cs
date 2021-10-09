@@ -34,9 +34,9 @@ public class ScoresGraph : BaseBehaviour
 			lines[i] = Instantiate(linePrefab, linesHolder);
 	}
 
-	float ToPercent(float value)
+	float ToPercent(float value, bool firstScore)
 	{
-		if(minScore == maxScore)
+		if(firstScore)
 			return 0.5f;
 
 		return (value - minScore) / (maxScore - minScore);
@@ -101,7 +101,7 @@ public class ScoresGraph : BaseBehaviour
 		});
 
 		// position highscore line
-		float highscorePercent = ToPercent(lastHighscore);
+		float highscorePercent = ToPercent(lastHighscore, scores.Count > 1);
 		highscoreLine.position = Vector3.Lerp(lowLimit.position, highLimit.position, highscorePercent);
 
 		// position points
@@ -110,7 +110,7 @@ public class ScoresGraph : BaseBehaviour
 
 		for (int i = 0; i < scores.Count; i++)
 		{
-			float heightPercentile = ToPercent(scores[i]);
+			float heightPercentile = ToPercent(scores[i], scores.Count > 1);
 			points[i].position = new Vector3(leftLimit.position.x + step * i, Mathf.Lerp(lowLimit.position.y, highLimit.position.y, heightPercentile), 0);
 			points[i].gameObject.SetActive(true);
 		}

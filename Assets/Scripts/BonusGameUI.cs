@@ -9,7 +9,6 @@ using static BonusManager;
 public class BonusGameUI : BaseBehaviour
 {
 	[Header("Settings")]
-	public float distanceActivation;
 	public float minDistanceThreshold;
 	public Color[] bonusColors;
 
@@ -21,14 +20,14 @@ public class BonusGameUI : BaseBehaviour
 
 	Animator anim;
 	Action SetBonusLost;
-	float speed;
+	float speed, waitingTimer, opportunitySize;
 	int lastBonusColor;
-	bool isPlaying;
+	bool isPlaying, isWaiting;
 
 	void OnDrawGizmos()
 	{
 		if(winButton != null)
-			Debug.DrawLine(winButton.transform.position + winButton.transform.right * distanceActivation / 2, winButton.transform.position - winButton.transform.right * distanceActivation / 2, Color.red);
+			Debug.DrawLine(winButton.transform.position + winButton.transform.right * minDistanceThreshold / 2, winButton.transform.position - winButton.transform.right * minDistanceThreshold / 2, Color.red);
 	}
 
 	public void Init(Action SetBonusWon, Action setBonusLost)
@@ -45,7 +44,7 @@ public class BonusGameUI : BaseBehaviour
 
 			isPlaying = false;
 
-			if(Vector3.Distance(leftImage.transform.parent.position, winButton.transform.position) <= distanceActivation)
+			if(Vector3.Distance(leftImage.transform.parent.position, winButton.transform.position) <= minDistanceThreshold)
 			{
 				isPlaying = false;
 
@@ -77,28 +76,42 @@ public class BonusGameUI : BaseBehaviour
 			leftImage.transform.parent.position = Vector3.MoveTowards(leftImage.transform.parent.position, winButton.transform.position, speed * Time.deltaTime);
 			rightImage.transform.parent.position = Vector3.MoveTowards(rightImage.transform.parent.position, winButton.transform.position, speed * Time.deltaTime);
 
-			// player is too late
-			if(Vector3.Distance(leftImage.transform.parent.position, winButton.transform.position) <= minDistanceThreshold)
+			if(!isWaiting)
 			{
-				isPlaying = false;
+				if(Vector3.Distance(leftImage.transform.parent.position, winButton.transform.position) <= minDistanceThreshold)
+				{
+					isWaiting = true;
+					waitingTimer = 0;
+				}
+			}
+			else
+			{
+				waitingTimer += Time.deltaTime;
 
-				SetBonusLost();
-				anim.Play("Lose");
+				// player is too late
+				if(waitingTimer >= opportunitySize)
+				{
+					isPlaying = false;
+
+					SetBonusLost();
+					anim.Play("Lose");
+				}
 			}
 		}
 	}
 
-	public void StartBonus(Bonus bonus, float delay)
+	public void StartBonus(Bonus bonus, float duration, float opportunityWindowSize)
 	{
 		if(!CheckInitialized())
 			return;
 
-		// This is so that bonus animations still happen
-		// delay -= 0.5f;
-		delay /= 2;
+		opportunitySize = opportunityWindowSize;
+		isWaiting = false;
+
+		duration = duration / 2 - opportunitySize;
 
 		isPlaying = true;
-		speed = Vector3.Distance(leftStartPoint.position, winButton.transform.position) / delay;
+		speed = Vector3.Distance(leftStartPoint.position, winButton.transform.position) / duration;
 
 		// picks bonus color
 		List<int> colorIndexes = new List<int>();
