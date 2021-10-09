@@ -54,9 +54,9 @@ public class ShipController : BaseBehaviour
 		if(Application.isMobilePlatform)
 		{
 			if(Input.touchCount == 0)
-				return;
-
-			horizontalInput = Input.GetTouch(0).position.x >= Screen.width ? 1 : -1;
+				horizontalInput = 0;
+			else
+				horizontalInput = Input.GetTouch(0).position.x >= Screen.width / 2 ? 1 : -1;
 		}
 		else
 			horizontalInput = Input.GetAxis("Horizontal");
