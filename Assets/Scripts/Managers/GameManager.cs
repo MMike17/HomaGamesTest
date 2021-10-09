@@ -88,7 +88,8 @@ public class GameManager : MonoBehaviour
 			() => { return levelManager.GetBonusPercent(); }
 		);
 		levelManager.Init(
-			(min, max) => trackGenerationManager.SetDifficulty(Random.Range(min, max))
+			(min, max) => trackGenerationManager.SetDifficulty(Random.Range(min, max)),
+			(obstacleCount) => trackGenerationManager.SetObstaclesPerLevel(obstacleCount)
 		);
 		bonusManager.Init(
 			bonusState =>

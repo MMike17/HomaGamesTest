@@ -16,12 +16,14 @@ public class LevelManager : BaseBehaviour
 	public Light mainLight;
 
 	Action<float, float> SetMinMaxDifficulty;
+	Action<int> SetObstacleCount;
 	float currentBonusPercent;
 	int currentLevel, currentScorePerObstacle;
 
-	public void Init(Action<float, float> setMinMaxDifficulty)
+	public void Init(Action<float, float> setMinMaxDifficulty, Action<int> setObstacleCount)
 	{
 		SetMinMaxDifficulty = setMinMaxDifficulty;
+		SetObstacleCount = setObstacleCount;
 
 		currentLevel = 0;
 		currentBonusPercent = levelSettings[currentLevel].bonusPercent;
@@ -32,7 +34,8 @@ public class LevelManager : BaseBehaviour
 			levelSettings[currentLevel].bonusPercent,
 			levelSettings[currentLevel].scorePerObstacle,
 			levelSettings[currentLevel].minDifficulty,
-			levelSettings[currentLevel].maxDifficulty
+			levelSettings[currentLevel].maxDifficulty,
+			levelSettings[currentLevel].obstaclesPerLevel
 		);
 
 		InitInternal();
@@ -58,7 +61,8 @@ public class LevelManager : BaseBehaviour
 				Mathf.Lerp(currentSettings.bonusPercent, nextSettings.bonusPercent, percentile),
 				Mathf.RoundToInt(Mathf.Lerp(currentSettings.scorePerObstacle, nextSettings.scorePerObstacle, percentile)),
 				Mathf.Lerp(currentSettings.minDifficulty, nextSettings.minDifficulty, percentile),
-				Mathf.Lerp(currentSettings.maxDifficulty, nextSettings.maxDifficulty, percentile)
+				Mathf.Lerp(currentSettings.maxDifficulty, nextSettings.maxDifficulty, percentile),
+				nextSettings.obstaclesPerLevel
 			);
 
 			yield return null;
@@ -70,13 +74,14 @@ public class LevelManager : BaseBehaviour
 			nextSettings.bonusPercent,
 			nextSettings.scorePerObstacle,
 			nextSettings.minDifficulty,
-			nextSettings.maxDifficulty
+			nextSettings.maxDifficulty,
+			nextSettings.obstaclesPerLevel
 		);
 
 		currentLevel = nextLevel;
 	}
 
-	void ApplySettings(Color environmentColor, Color lightColor, float bonusPercent, int scorePerObstacle, float minDifficulty, float maxDifficulty)
+	void ApplySettings(Color environmentColor, Color lightColor, float bonusPercent, int scorePerObstacle, float minDifficulty, float maxDifficulty, int obstacleCount)
 	{
 		mainCamera.backgroundColor = environmentColor;
 		RenderSettings.fogColor = environmentColor;
@@ -86,6 +91,7 @@ public class LevelManager : BaseBehaviour
 		currentScorePerObstacle = scorePerObstacle;
 
 		SetMinMaxDifficulty(minDifficulty, maxDifficulty);
+		SetObstacleCount(obstacleCount);
 	}
 
 	public void BlendToNewLevel()
@@ -126,6 +132,6 @@ public class LevelManager : BaseBehaviour
 		[Range(0, 1)]
 		public float minDifficulty, maxDifficulty, bonusPercent;
 		public Color environmentColor, lightColor;
-		public int scorePerObstacle;
+		public int scorePerObstacle, obstaclesPerLevel;
 	}
 }

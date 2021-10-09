@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataManagerLogLevel: 1
-  isBuild: 0
+  isBuild: 1
   maxScoreHistory: 10
   vfxManager: {fileID: 1360939401}
   levelManager: {fileID: 443765910}
@@ -601,7 +601,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 81.9
+  m_fontSize: 83.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -735,7 +735,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75.85
+  m_fontSize: 74.2
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1706,18 +1706,21 @@ MonoBehaviour:
     environmentColor: {r: 0, g: 0.011538458, b: 0.05, a: 1}
     lightColor: {r: 0.39999998, g: 0.5411763, b: 1, a: 1}
     scorePerObstacle: 10
+    obstaclesPerLevel: 10
   - minDifficulty: 0.3
     maxDifficulty: 0.8
     bonusPercent: 0.2
     environmentColor: {r: 0, g: 0.05, b: 0.038461544, a: 1}
     lightColor: {r: 0.39999998, g: 1, b: 0.85882354, a: 1}
     scorePerObstacle: 12
+    obstaclesPerLevel: 15
   - minDifficulty: 0.5
     maxDifficulty: 1
     bonusPercent: 0.1
     environmentColor: {r: 0.040384628, g: 0, b: 0.05, a: 1}
     lightColor: {r: 0.90588236, g: 0.39999998, b: 1, a: 1}
     scorePerObstacle: 15
+    obstaclesPerLevel: 20
   mainCamera: {fileID: 963194227}
   mainLight: {fileID: 705507994}
 --- !u!1 &460739847
@@ -2078,7 +2081,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 74.7
+  m_fontSize: 76.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3120,7 +3123,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75.85
+  m_fontSize: 74.2
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3443,7 +3446,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 51.3
+  m_fontSize: 52.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4033,7 +4036,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 91
+  m_fontSize: 93.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4457,7 +4460,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 112.4
+  m_fontSize: 109.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -10222,7 +10225,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 126.45
+  m_fontSize: 123.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -10811,7 +10814,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 89.6
+  m_fontSize: 91.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11624,11 +11627,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomizationMemory: 2
   speed: 30
-  minFrequency: 0.5
-  maxFrequency: 5
-  minOpportunityWindow: 0.1
+  minFrequency: 1
+  maxFrequency: 4
+  minOpportunityWindow: 0.15
   maxOpportunityWindow: 0.3
-  obstaclesPerLevel: 10
   sideObstacles:
   - {fileID: 2378801010034978378, guid: 08aabcb718c32d242bc812830ef1272b, type: 3}
   - {fileID: 5518640010852816275, guid: fa5d7906311d00345bc937946901648c, type: 3}

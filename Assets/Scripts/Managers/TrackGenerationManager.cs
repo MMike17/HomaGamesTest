@@ -8,7 +8,6 @@ public class TrackGenerationManager : BaseBehaviour
 	[Header("Settings")]
 	public int randomizationMemory;
 	public float speed, minFrequency, maxFrequency, minOpportunityWindow, maxOpportunityWindow;
-	public int obstaclesPerLevel;
 
 	[Header("Scene references")]
 	public GameObject[] sideObstacles;
@@ -26,7 +25,7 @@ public class TrackGenerationManager : BaseBehaviour
 	Action<float, float> GenerateBonus;
 	Action GiveScore, ChangeLevel;
 	float currentDifficulty, sizeCount, shipControllerZPos;
-	int levelObstaclesCount;
+	int obstaclesPerLevel, currentObstaclesCount;
 	bool gamePaused;
 
 	public void Init(float shipControllerZPos, Action giveScore, Action changeLevel, Action<float, float> generateBonus, Func<float> getBonusPercentile)
@@ -43,7 +42,7 @@ public class TrackGenerationManager : BaseBehaviour
 		lastCenterObstacles = new List<int>();
 
 		gamePaused = true;
-		levelObstaclesCount = 0;
+		currentObstaclesCount = 0;
 
 		InitInternal();
 	}
@@ -133,10 +132,10 @@ public class TrackGenerationManager : BaseBehaviour
 	void GenerateNextObstacle()
 	{
 		// change level
-		if(levelObstaclesCount >= obstaclesPerLevel)
+		if(currentObstaclesCount >= obstaclesPerLevel)
 		{
 			ChangeLevel();
-			levelObstaclesCount = 0;
+			currentObstaclesCount = 0;
 		}
 
 		// generates obstacle
@@ -156,7 +155,7 @@ public class TrackGenerationManager : BaseBehaviour
 			spawnedObstacle.Add(newObstacle);
 		}
 
-		levelObstaclesCount++;
+		currentObstaclesCount++;
 	}
 
 	public void SetDifficulty(float difficulty)
@@ -180,7 +179,7 @@ public class TrackGenerationManager : BaseBehaviour
 
 		// reset game settings
 		gamePaused = true;
-		levelObstaclesCount = 0;
+		currentObstaclesCount = 0;
 
 		gamePaused = false;
 	}
@@ -191,5 +190,10 @@ public class TrackGenerationManager : BaseBehaviour
 			return;
 
 		gamePaused = true;
+	}
+
+	public void SetObstaclesPerLevel(int levelObstaclesCount)
+	{
+		obstaclesPerLevel = levelObstaclesCount;
 	}
 }
