@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogColor: {r: 0, g: 0, b: 0, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.015
   m_LinearFogStart: 0
@@ -269,8 +269,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69947184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3}
-  m_LocalScale: {x: 1, y: 1, z: 71}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 72}
   m_Children:
   - {fileID: 535968943}
   m_Father: {fileID: 375768612}
@@ -1703,19 +1703,19 @@ MonoBehaviour:
   - minDifficulty: 0
     maxDifficulty: 0.5
     bonusPercent: 0.4
-    environmentColor: {r: 0, g: 0.023268795, b: 0.1, a: 1}
+    environmentColor: {r: 0, g: 0.011538458, b: 0.05, a: 1}
     lightColor: {r: 0.39999998, g: 0.5411763, b: 1, a: 1}
     scorePerObstacle: 10
   - minDifficulty: 0.3
     maxDifficulty: 0.8
     bonusPercent: 0.2
-    environmentColor: {r: 0, g: 0.14901961, b: 0.111764714, a: 1}
+    environmentColor: {r: 0, g: 0.05, b: 0.038461544, a: 1}
     lightColor: {r: 0.39999998, g: 1, b: 0.85882354, a: 1}
     scorePerObstacle: 12
   - minDifficulty: 0.5
     maxDifficulty: 1
     bonusPercent: 0.1
-    environmentColor: {r: 0.1254902, g: 0, b: 0.14901961, a: 1}
+    environmentColor: {r: 0.040384628, g: 0, b: 0.05, a: 1}
     lightColor: {r: 0.90588236, g: 0.39999998, b: 1, a: 1}
     scorePerObstacle: 15
   mainCamera: {fileID: 963194227}
@@ -3530,7 +3530,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
