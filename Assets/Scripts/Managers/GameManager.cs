@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
 			shipController.transform.position.z,
 			() =>
 			{
+				shipController.PassObstacle();
 				scoreManager.AddScore(levelManager.GetScorePerObstacle());
 
 				if(!newHigh)

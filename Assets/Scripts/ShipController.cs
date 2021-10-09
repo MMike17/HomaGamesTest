@@ -152,4 +152,12 @@ public class ShipController : BaseBehaviour
 
 		anim.Play("Bonus");
 	}
+
+	public void PassObstacle()
+	{
+		if(!CheckInitialized())
+			return;
+
+		anim.Play("PassObstacle");
+	}
 }
